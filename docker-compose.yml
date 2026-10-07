@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  clinical-ai:
+    build: .
+    container_name: clinical-report-ai
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - WHISPER_MODEL=base
+      - BART_MODEL=philschmid/bart-large-cnn-samsum
+      - T5_MODEL=philschmid/flan-t5-base-samsum
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 4G

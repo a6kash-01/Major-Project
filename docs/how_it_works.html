@@ -1,0 +1,727 @@
+<title>How Clinical Report AI Works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a step list pinned on the left (stacks on top on narrow screens) beside one reading column.
+   Every step uses the same anatomy: one-line summary, how it works, why, real example. */
+:root {
+  --bg: #f3f6fa;
+  --surface: #ffffff;
+  --ink: #0d1b2e;
+  --ink-2: #3a4759;
+  --muted: #657185;
+  --hair: #dfe5ee;
+  --accent: #1c5cab;
+  --accent-soft: #e8f0fb;
+  --good: #006300;
+  --warn-soft: #fdf3e1;
+  --warn-ink: #7a4b00;
+  --font-body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1017; --surface: #121a24; --ink: #e8eef6; --ink-2: #c1cad7; --muted: #8e9aab;
+    --hair: #222d3b; --accent: #9ec5f4; --accent-soft: #16243a; --good: #0ca30c;
+    --warn-soft: #2a2112; --warn-ink: #f0c36a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1017; --surface: #121a24; --ink: #e8eef6; --ink-2: #c1cad7; --muted: #8e9aab;
+  --hair: #222d3b; --accent: #9ec5f4; --accent-soft: #16243a; --good: #0ca30c;
+  --warn-soft: #2a2112; --warn-ink: #f0c36a;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15.5px; line-height: 1.65; }
+.layout { max-width: 1140px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); padding-block: 40px 88px;
+  display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 56px; }
+@media (max-width: 960px) { .layout { grid-template-columns: minmax(0, 1fr); gap: 32px; } }
+main { min-width: 0; display: grid; gap: 64px; }
+
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(30px, 5vw, 42px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+h2 { font-size: 24px; font-weight: 650; letter-spacing: -0.01em; line-height: 1.25; }
+h3 { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+p { margin: 0; }
+p, li { max-width: 68ch; }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+code { font-family: var(--font-data); font-size: 0.88em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
+strong { font-weight: 600; }
+
+/* Step list */
+.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; display: grid; gap: 10px; }
+.toc .eyebrow { margin-bottom: 4px; }
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: s; }
+.toc li a { display: grid; grid-template-columns: 26px 1fr; gap: 6px; padding: 5px 8px; border-radius: 6px; color: var(--ink-2); text-decoration: none; font-size: 14px; line-height: 1.4; }
+.toc li a:hover { background: var(--accent-soft); color: var(--ink); }
+.toc li a span { font-family: var(--font-data); font-size: 12px; color: var(--muted); padding-top: 1px; }
+.toc .extra a { grid-template-columns: 1fr; }
+@media (max-width: 960px) {
+  .toc { position: static; background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; padding: 14px; }
+  .toc ol { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+}
+
+.eyebrow { font-family: var(--font-data); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lede { font-size: 17.5px; color: var(--ink-2); }
+.intro { display: grid; gap: 14px; }
+
+/* Pipeline strip */
+.pipeline { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 6px; align-items: center; }
+.pipeline li { display: flex; align-items: center; gap: 6px; }
+.pipeline a { display: inline-flex; gap: 6px; align-items: baseline; background: var(--surface); border: 1px solid var(--hair); border-radius: 999px; padding: 4px 12px; font-size: 13.5px; color: var(--ink); text-decoration: none; }
+.pipeline a b { font-family: var(--font-data); font-weight: 500; font-size: 12px; color: var(--accent); }
+.pipeline a:hover { border-color: var(--accent); }
+.pipeline .arrow { color: var(--muted); font-size: 13px; }
+
+/* Steps */
+.step { display: grid; gap: 22px; scroll-margin-top: 24px; }
+.step-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: start; }
+.step-no { font-family: var(--font-data); font-weight: 500; font-size: 15px; color: var(--accent); background: var(--accent-soft); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; margin-top: 2px; }
+.step-head .one-line { font-size: 17px; color: var(--ink-2); margin-top: 6px; }
+.block { display: grid; gap: 10px; align-content: start; }
+.block ol, .block ul { margin: 0; padding-left: 22px; display: grid; gap: 8px; align-content: start; }
+.block ol > li::marker { font-family: var(--font-data); color: var(--muted); font-size: 0.9em; }
+.block li ul { margin-top: 6px; gap: 4px; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 28px; }
+.cols > * { min-width: 0; }
+
+.example { margin: 0; background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; padding: 16px 18px; display: grid; gap: 12px; min-width: 0; }
+.example figcaption { font-family: var(--font-data); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.ba { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 14px; }
+.ba > div { min-width: 0; display: grid; gap: 6px; align-content: start; }
+.ba .tag { font-size: 12px; font-weight: 600; color: var(--muted); }
+.text { font-size: 14px; color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; }
+.text .sp { font-weight: 600; color: var(--accent); }
+.text del { color: var(--muted); text-decoration-thickness: 1px; }
+.text mark { background: var(--accent-soft); color: var(--ink); padding: 0 2px; border-radius: 3px; }
+.note { font-size: 13.5px; color: var(--muted); }
+.tools { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; color: var(--muted); }
+.chip { background: var(--accent-soft); color: var(--ink); border-radius: 6px; padding: 2px 8px; font-size: 12.5px; }
+
+.callout { background: var(--warn-soft); border-radius: 10px; padding: 14px 16px; display: grid; gap: 8px; }
+.callout h3 { color: var(--warn-ink); }
+.callout ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; color: var(--ink); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+td.num, th.num { text-align: right; font-family: var(--font-data); font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.pick td { background: var(--accent-soft); }
+td.first { font-weight: 600; }
+.good { color: var(--good); font-weight: 600; }
+
+/* SOAP mini report */
+.soap-report { display: grid; gap: 0; border: 1px solid var(--hair); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.soap-row { display: grid; grid-template-columns: 52px minmax(0, 1fr); border-bottom: 1px solid var(--hair); }
+.soap-row:last-child { border-bottom: 0; }
+.soap-letter { font-family: var(--font-data); font-weight: 500; font-size: 20px; color: var(--accent); background: var(--accent-soft); display: grid; place-items: center; }
+.soap-body { padding: 12px 14px; display: grid; gap: 4px; font-size: 14px; }
+.soap-body .h { font-weight: 600; }
+.soap-body dl { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 3px 12px; }
+.soap-body dt { color: var(--muted); }
+.soap-body dd { margin: 0; overflow-wrap: anywhere; }
+@media (max-width: 520px) { .soap-body dl { grid-template-columns: minmax(0, 1fr); } .soap-body dd { margin-bottom: 6px; } }
+
+.glossary { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 14px 28px; margin: 0; }
+.glossary div { display: grid; gap: 2px; }
+.glossary dt { font-weight: 600; }
+.glossary dd { margin: 0; color: var(--ink-2); font-size: 14.5px; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--hair); padding-top: 16px; }
+</style>
+
+<div class="layout">
+  <nav class="toc" aria-label="Steps">
+    <p class="eyebrow">Steps</p>
+    <ol>
+      <li><a href="#data"><span>0</span>The data</a></li>
+      <li><a href="#step-1"><span>1</span>Record</a></li>
+      <li><a href="#step-2"><span>2</span>Speech to text</a></li>
+      <li><a href="#step-3"><span>3</span>Clean the text</a></li>
+      <li><a href="#step-4"><span>4</span>Who said what</a></li>
+      <li><a href="#step-5"><span>5</span>Split long talks</a></li>
+      <li><a href="#step-6"><span>6</span>Write the summary</a></li>
+      <li><a href="#step-7"><span>7</span>Fact check</a></li>
+      <li><a href="#step-8"><span>8</span>SOAP report</a></li>
+      <li><a href="#step-9"><span>9</span>Save and search</a></li>
+      <li><a href="#step-10"><span>10</span>Measure accuracy</a></li>
+      <li class="extra"><a href="#tools">Tools and hardware</a></li>
+      <li class="extra"><a href="#glossary">Glossary</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section class="intro" aria-labelledby="top">
+      <p class="eyebrow">Final-year major project · process guide</p>
+      <h1 id="top">How Clinical Report AI Works</h1>
+      <p class="lede">The system listens to a doctor–patient conversation and turns it into a clinical report in the standard SOAP format. This guide follows the conversation through every step, from recording to the saved report. For each step it explains what happens, how it happens, why we chose that method, and what the step did to one real consultation.</p>
+      <ol class="pipeline" aria-label="Pipeline overview">
+        <li><a href="#step-1"><b>1</b>Record</a><span class="arrow" aria-hidden="true">→</span></li>
+        <li><a href="#step-2"><b>2</b>Speech to text</a><span class="arrow" aria-hidden="true">→</span></li>
+        <li><a href="#step-3"><b>3</b>Clean</a><span class="arrow" aria-hidden="true">→</span></li>
+        <li><a href="#step-4"><b>4</b>Who said what</a><span class="arrow" aria-hidden="true">→</span></li>
+        <li><a href="#step-5"><b>5</b>Split</a><span class="arrow" aria-hidden="true">→</span></li>
+        <li><a href="#step-6"><b>6</b>Summarise</a><span class="arrow" aria-hidden="true">→</span></li>
+        <li><a href="#step-7"><b>7</b>Fact check</a><span class="arrow" aria-hidden="true">→</span></li>
+        <li><a href="#step-8"><b>8</b>SOAP report</a><span class="arrow" aria-hidden="true">→</span></li>
+        <li><a href="#step-9"><b>9</b>Save</a><span class="arrow" aria-hidden="true">→</span></li>
+        <li><a href="#step-10"><b>10</b>Measure</a></li>
+      </ol>
+      <p class="note">The example used throughout is a migraine consultation from the project's test set: nine turns between a doctor and a patient called Robert.</p>
+    </section>
+
+    <!-- 0. DATA -->
+    <section class="step" id="data" aria-labelledby="h-data">
+      <div class="step-head">
+        <span class="step-no">0</span>
+        <div>
+          <h2 id="h-data">The data</h2>
+          <p class="one-line">We did not collect patient data and we did not train any model. Every dataset below is used only to test the system.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Data</th><th>Where it came from</th><th>What we used it for</th></tr></thead>
+          <tbody>
+            <tr><td class="first">Your own consultations</td><td>Recorded with the microphone in the web app, or uploaded as an audio file</td><td>The real input when the system is used</td></tr>
+            <tr><td class="first">OSCE practice consultation, 9 min 40 s</td><td>Recording of a medical student taking a patient history, already in the project's uploads folder</td><td>Testing speech-to-text on real, natural speech</td></tr>
+            <tr><td class="first">10 benchmark conversations</td><td>Written by the authors of the published project, each with a reference summary</td><td>Comparing BART with T5, and scoring summaries</td></tr>
+            <tr><td class="first">MTS-Dialog</td><td>Public research dataset of about 1,700 doctor–patient conversations with clinician-written notes (MEDIQA-Chat 2023). The conversations were written by medically trained annotators from sample clinical notes.</td><td>Unseen test data: 250 conversations for speaker separation, 53 history-of-illness notes for summaries</td></tr>
+            <tr><td class="first">Spoken benchmark</td><td>The 10 benchmark conversations read aloud by Windows text-to-speech, a male voice for the doctor and a female voice for the patient</td><td>Because the true words are known, we can count Whisper's mistakes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cols">
+        <div class="block">
+          <h3>Why no training</h3>
+          <ul>
+            <li>Real patient conversations are private and hard to get legally.</li>
+            <li>Training large language models needs expensive hardware and a lot of data.</li>
+            <li>Pretrained models already understand language. Our work is choosing the right ones and building a reliable pipeline around them. This is called transfer learning.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <h3>Why "unseen" data matters</h3>
+          <ul>
+            <li>If you test on the same examples you used while building, the score looks better than it really is.</li>
+            <li>We never looked at MTS-Dialog while writing our rules, so its scores show how the system does on new conversations.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. RECORD -->
+    <section class="step" id="step-1" aria-labelledby="h-1">
+      <div class="step-head">
+        <span class="step-no">1</span>
+        <div>
+          <h2 id="h-1">Record the consultation</h2>
+          <p class="one-line">The doctor records the conversation in the web app or uploads an audio file.</p>
+        </div>
+      </div>
+      <div class="cols">
+        <div class="block">
+          <h3>How it works</h3>
+          <ol>
+            <li>The doctor opens the web page, which is served by our Python backend (FastAPI).</li>
+            <li>They press <strong>Record</strong> to use the browser's microphone, or upload a file: .wav, .mp3, .m4a, .flac, .ogg or .webm.</li>
+            <li>The browser sends the audio to the server.</li>
+            <li>The server checks the file type and size. Anything over 50 MB or in another format is rejected with a clear message.</li>
+            <li>The file is saved in <code>data/uploads</code> with a random 8-character ID added to its name, so two files with the same name never overwrite each other.</li>
+          </ol>
+        </div>
+        <div class="block">
+          <h3>Why we did it this way</h3>
+          <ul>
+            <li>Everything runs on the clinic's own computer. The audio is never sent to an outside service, which protects patient privacy.</li>
+            <li>The server only serves files from the uploads folder by their exact name, so a request cannot reach other files on the computer.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="tools">Tools: <span class="chip">FastAPI</span><span class="chip">Uvicorn</span><span class="chip">HTML, CSS, JavaScript</span></p>
+    </section>
+
+    <!-- 2. SPEECH TO TEXT -->
+    <section class="step" id="step-2" aria-labelledby="h-2">
+      <div class="step-head">
+        <span class="step-no">2</span>
+        <div>
+          <h2 id="h-2">Speech to text (Whisper)</h2>
+          <p class="one-line">Whisper listens to the recording and writes down every word, with timings.</p>
+        </div>
+      </div>
+      <div class="block">
+        <h3>How it works</h3>
+        <ol>
+          <li>FFmpeg, a standard audio tool, converts the file to one format: 16,000 samples per second, one channel.</li>
+          <li>Whisper cuts the audio into 30-second windows.</li>
+          <li>Each window becomes a <strong>spectrogram</strong>: a picture of the sound that shows which pitches are loud at each moment, using 80 pitch bands.</li>
+          <li>The <strong>encoder</strong>, the listening half of the model, reads the picture and turns it into numbers that describe the sounds.</li>
+          <li>The <strong>decoder</strong>, the writing half, writes the text one piece (token) at a time. Each time it picks the most likely next word, given the sound and the words written so far.</li>
+          <li>It also marks where each phrase starts and ends ("segments") and detects the language.</li>
+          <li>The output is the full text, the timed segments and the language. On the GPU, Whisper uses half-precision numbers, which makes it faster.</li>
+        </ol>
+      </div>
+      <div class="cols">
+        <div class="block">
+          <h3>Why Whisper</h3>
+          <ul>
+            <li>Trained by OpenAI on 680,000 hours of speech in many languages, so it copes with accents and background noise.</li>
+            <li>Free, open source and runs offline.</li>
+            <li>Comes in sizes. Bigger is more accurate but slower: tiny (39 million parameters), base (74 million), small (244 million), medium (769 million). The laptop's GPU lets us run the bigger sizes quickly.</li>
+            <li>It can take a short context sentence before listening, such as "Doctor-patient medical consultation about symptoms, vital signs and medications". This steers it towards medical words. We measure whether it helps before turning it on.</li>
+          </ul>
+        </div>
+        <figure class="example">
+          <figcaption>On a real recording</figcaption>
+          <p class="text">The 9 min 40 s OSCE recording with whisper-tiny on the CPU took 2 min 7 s and produced 132 segments and 1,875 words.</p>
+          <p class="text">Mistakes from the smallest model: <mark>"fine-we-year"</mark> instead of "final-year", <mark>"155 years old"</mark> where the patient probably said 55.</p>
+          <p class="note">This is why we test larger Whisper sizes on the GPU.</p>
+        </figure>
+      </div>
+      <p class="tools">Tools: <span class="chip">OpenAI Whisper</span><span class="chip">FFmpeg</span><span class="chip">PyTorch on the GPU</span></p>
+    </section>
+
+    <!-- 3. CLEAN -->
+    <section class="step" id="step-3" aria-labelledby="h-3">
+      <div class="step-head">
+        <span class="step-no">3</span>
+        <div>
+          <h2 id="h-3">Clean the text</h2>
+          <p class="one-line">Remove speech noise and tidy the text without changing any medical fact.</p>
+        </div>
+      </div>
+      <div class="cols">
+        <div class="block">
+          <h3>How it works</h3>
+          <ol>
+            <li>Remove filler words using 15 patterns: "um", "uh", "umm", "hmm", "err", "ah", "like,", "you know," (and "you know" at the end of a sentence), "I mean,", "so, yeah", "kind of", "sort of".</li>
+            <li>Remove the gaps and stray commas this leaves behind.</li>
+            <li>Work line by line, so each "Doctor:" or "Patient:" line stays separate.</li>
+            <li>Put one space after a full stop, question mark or exclamation mark, except inside numbers, so 98.6 stays 98.6.</li>
+            <li>Turn repeated punctuation such as "!!" into one mark.</li>
+            <li>Put a space after commas, except inside numbers, so 1,000 stays 1,000.</li>
+            <li>Start every sentence with a capital letter.</li>
+          </ol>
+        </div>
+        <div class="block">
+          <h3>Why it matters</h3>
+          <ul>
+            <li>The summary models write better summaries from tidy text.</li>
+            <li>The published project's cleaning damaged numbers: "98.6" became "98. 6" and "0.5 mg" became "0. 5 mg". In a medical record that is dangerous, so we fixed it.</li>
+            <li>It also joined the whole conversation into one line, which stopped the next step from telling the speakers apart. Keeping the lines fixed that too.</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="example">
+        <figcaption>In our example</figcaption>
+        <div class="ba">
+          <div><span class="tag">Before</span><p class="text"><span class="sp">Patient:</span> … for the past 3 days, mostly on the left side of my head. <del>Um,</del> it gets worse with bright light and loud sounds.</p></div>
+          <div><span class="tag">After</span><p class="text"><span class="sp">Patient:</span> … for the past 3 days, mostly on the left side of my head. It gets worse with bright light and loud sounds.</p></div>
+        </div>
+        <p class="note">"98.6 degrees F", "120/80 mmHg" and "400 mg" in the same conversation come through unchanged.</p>
+      </figure>
+      <p class="tools">Tools: <span class="chip">Python regular expressions (text patterns)</span></p>
+    </section>
+
+    <!-- 4. SPEAKERS -->
+    <section class="step" id="step-4" aria-labelledby="h-4">
+      <div class="step-head">
+        <span class="step-no">4</span>
+        <div>
+          <h2 id="h-4">Who said what</h2>
+          <p class="one-line">Label every sentence as Doctor or Patient.</p>
+        </div>
+      </div>
+      <div class="block">
+        <h3>How it works</h3>
+        <p>If the text already has "Doctor:" and "Patient:" labels, as in a typed transcript, the system keeps them. Whisper's text has no labels, so the system works them out:</p>
+        <ol>
+          <li>Split the text into sentences.</li>
+          <li>Give each sentence a Doctor score and a Patient score:
+            <ul>
+              <li>+1 Doctor for each doctor phrase found. There are 48, such as "what brings you", "let me examine", "I am prescribing", "on a scale", "examination", "we will".</li>
+              <li>+1 Patient for each patient phrase found. There are 28, such as "I have been having", "I feel", "my chest", "I've never", "my wife".</li>
+              <li>+0.5 Doctor for every "you" or "your" (except in "thank you"), and +0.5 Patient for every "I", "me" or "my".</li>
+              <li>+1 Patient when the sentence speaks to the doctor, as in "Thank you, Doctor".</li>
+              <li>Questions: a question about "I" or "we", or about what will happen next ("Will he need an antibiotic?") gets +1 Patient. Any other question ("Did the pain move?") gets +1 Doctor.</li>
+            </ul>
+          </li>
+          <li>The higher score wins.</li>
+          <li>If the scores tie and the sentence before was a question, this sentence is the other person's answer. Otherwise the same person is still talking.</li>
+          <li>The first sentence is the doctor's, because consultations start with the doctor's greeting.</li>
+          <li>Neighbouring sentences from the same person are joined into one turn.</li>
+        </ol>
+      </div>
+      <div class="cols">
+        <div class="block">
+          <h3>Why rules</h3>
+          <ul>
+            <li>Fast, needs no extra model or account, and every decision can be explained.</li>
+            <li>Measured on 250 unseen public conversations: 88.4% of words go to the right speaker. The published project scored 52.5%, about the same as guessing.</li>
+            <li>A future version can also use the voices themselves (speaker diarisation).</li>
+          </ul>
+        </div>
+        <figure class="example">
+          <figcaption>A real Whisper sentence pair</figcaption>
+          <div class="ba">
+            <div><span class="tag">Whisper output</span><p class="text">Did the pain move anywhere else apart from that? No that was it.</p></div>
+            <div><span class="tag">After step 4</span><p class="text"><span class="sp">Doctor:</span> Did the pain move anywhere else apart from that?
+<span class="sp">Patient:</span> No that was it.</p></div>
+          </div>
+          <p class="note">One Whisper segment held both speakers. The question rule and the answer rule split them.</p>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 5. SPLIT -->
+    <section class="step" id="step-5" aria-labelledby="h-5">
+      <div class="step-head">
+        <span class="step-no">5</span>
+        <div>
+          <h2 id="h-5">Split long conversations</h2>
+          <p class="one-line">Cut long consultations into overlapping pieces the models can read.</p>
+        </div>
+      </div>
+      <div class="cols">
+        <div class="block">
+          <h3>How it works</h3>
+          <ol>
+            <li>Split the conversation into sentences.</li>
+            <li>Add sentences to a piece until it reaches about 350 words.</li>
+            <li>Start the next piece with the last 40 or so words of the previous one. This overlap keeps the context.</li>
+            <li>If there is only one piece, summarise it once.</li>
+            <li>If there are several, summarise each piece, join those summaries, and summarise them again. This is called hierarchical summarisation.</li>
+          </ol>
+        </div>
+        <div class="block">
+          <h3>Why</h3>
+          <ul>
+            <li>The models can only read a limited amount at once: BART up to 1,024 tokens, T5 up to 512. A token is a word or part of a word.</li>
+            <li>Cutting at sentence ends means a sentence is never split in half.</li>
+          </ul>
+          <p class="note">In our example the migraine consultation fits in one piece. The 9-minute OSCE recording became 7 pieces.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. SUMMARY -->
+    <section class="step" id="step-6" aria-labelledby="h-6">
+      <div class="step-head">
+        <span class="step-no">6</span>
+        <div>
+          <h2 id="h-6">Write the summary (BART and T5)</h2>
+          <p class="one-line">An AI model reads the conversation and writes a short summary in its own words.</p>
+        </div>
+      </div>
+      <div class="block">
+        <h3>How it works</h3>
+        <ol>
+          <li>A <strong>tokenizer</strong> turns the text into tokens, the numbers the model works with. For T5 we put "summarize: " in front, which tells T5 which task to do.</li>
+          <li>The <strong>encoder</strong> reads the whole conversation at once. Through <strong>attention</strong>, every word looks at every other word to understand the context, for example linking "it" back to "the headache".</li>
+          <li>The <strong>decoder</strong> writes the summary one token at a time.</li>
+          <li><strong>Beam search</strong>: instead of keeping only the single best next word, it keeps the 4 best partial summaries at each step and picks the best finished one.</li>
+          <li>Rules while writing: never repeat the same three words; prefer fuller summaries (length penalty 2.0); make the summary between about a quarter and 60% of the input length, and at most 180 tokens.</li>
+          <li>Inputs shorter than 25 words are kept as they are.</li>
+          <li>The models run on the GPU when there is one, otherwise on the CPU. Each model loads once, the first time it is needed.</li>
+        </ol>
+      </div>
+      <div class="block">
+        <h3>How we chose the models</h3>
+        <ol>
+          <li>We listed 6 ready-made BART and T5 models from Hugging Face, a public library of pretrained models.</li>
+          <li>We ran all 6 on the same 10 benchmark conversations.</li>
+          <li>We scored each one with ROUGE and with "facts kept" (see step 10).</li>
+          <li>We kept the best BART and the best T5. The app offers both, because the project's objectives ask us to compare them.</li>
+        </ol>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Model (summary only, before fact check)</th><th>Trained on</th><th class="num">ROUGE-1</th><th class="num">ROUGE-L</th><th class="num">Facts kept</th></tr></thead>
+          <tbody>
+            <tr><td>BART-large-CNN (published project)</td><td>News articles</td><td class="num">0.284</td><td class="num">0.188</td><td class="num">35.8%</td></tr>
+            <tr class="pick"><td><strong>BART-large-CNN-SAMSum</strong> (chosen BART)</td><td>News, then chat conversations</td><td class="num">0.369</td><td class="num">0.282</td><td class="num">69.8%</td></tr>
+            <tr><td>BART-large dialogue (MEETING_SUMMARY)</td><td>Meetings and dialogues</td><td class="num">0.321</td><td class="num">0.244</td><td class="num">62.6%</td></tr>
+            <tr><td>T5-base (published project)</td><td>General web text and tasks</td><td class="num">0.280</td><td class="num">0.192</td><td class="num">39.8%</td></tr>
+            <tr><td>Flan-T5-base</td><td>T5 taught 1,800+ instruction tasks</td><td class="num">0.279</td><td class="num">0.223</td><td class="num">39.9%</td></tr>
+            <tr class="pick"><td><strong>Flan-T5-base-SAMSum</strong> (chosen T5, best on the benchmark)</td><td>Instructions, then chat conversations</td><td class="num">0.394</td><td class="num">0.312</td><td class="num">80.2%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">On the 53 unseen MTS-Dialog notes the order changes: BART-large-CNN-SAMSum scores best (ROUGE-L 0.252 against 0.229 for Flan-T5-base-SAMSum). Neither model wins everywhere, so the app keeps both and the doctor can choose.</p>
+      <div class="cols">
+        <div class="block">
+          <h3>Why these two</h3>
+          <ul>
+            <li>The published project used models trained on news articles, so they copied lines from the conversation instead of summarising it.</li>
+            <li>The chosen models were already fine-tuned by other researchers on SAMSum, about 16,000 chat conversations with human-written summaries. They learned to turn a conversation into a short third-person summary.</li>
+            <li>Flan-T5 was also taught by Google to follow instructions. It was the most accurate on the benchmark, and it is smaller than BART-large (248 million parameters against 406 million). BART-large-CNN-SAMSum was the most accurate on unseen data.</li>
+            <li>We do not train anything. We reuse the published models as they are.</li>
+          </ul>
+        </div>
+        <figure class="example">
+          <figcaption>In our example (Flan-T5-base-SAMSum)</figcaption>
+          <p class="text">Patient has been having severe throbbing headaches for the past 3 days. He has tried OTC ibuprofen 400 mg twice a day, but it barely helped. The doctor is diagnosing acute migraine headache. He is prescribing Sumatriptan 50 mg and Paracetamol 500 mg for relief. He will follow up in 1 week.</p>
+          <p class="note">The published project's BART wrote: "Doctor: Good morning, Mr. Robert. How can I help you today? Patient: I have been having…", which is a copy, not a summary.</p>
+        </figure>
+      </div>
+      <p class="tools">Tools: <span class="chip">Hugging Face Transformers</span><span class="chip">PyTorch</span></p>
+    </section>
+
+    <!-- 7. FACT CHECK -->
+    <section class="step" id="step-7" aria-labelledby="h-7">
+      <div class="step-head">
+        <span class="step-no">7</span>
+        <div>
+          <h2 id="h-7">Fact check (fact grounding)</h2>
+          <p class="one-line">Make sure the key numbers and decisions from the conversation are in the summary.</p>
+        </div>
+      </div>
+      <div class="cols">
+        <div class="block">
+          <h3>How it works</h3>
+          <ol>
+            <li>Read these facts from the conversation, never from the AI summary:
+              <ul>
+                <li>How long the symptoms have lasted, from the patient's own words.</li>
+                <li>Vital signs and test results, using 10 patterns: blood pressure, heart rate, temperature, breathing rate, oxygen saturation, blood glucose, HbA1c and peak flow.</li>
+                <li>The diagnosis, from doctor phrases such as "I am diagnosing…" or "You have acute…".</li>
+                <li>New medicines with their dose and how often.</li>
+                <li>Timed follow-up, such as "follow up in 1 week".</li>
+              </ul>
+            </li>
+            <li>Ignore limits that are not readings, such as "if fever exceeds 102 F".</li>
+            <li>For each fact, check whether the summary already has it: the value of a reading ("120/80"), the name and dose of a medicine, all the main words of a diagnosis.</li>
+            <li>Add only the missing facts at the end, in a short labelled sentence.</li>
+          </ol>
+        </div>
+        <div class="block">
+          <h3>Why</h3>
+          <ul>
+            <li>AI summaries sometimes leave out a dose or a reading. In a medical record that is a real risk.</li>
+            <li>Every added fact is copied from the conversation, so nothing is invented.</li>
+            <li>Facts kept in the summary rose from 29% in the published project to 89%.</li>
+            <li>Trade-off: the extra sentence lowers ROUGE-L slightly for the best model (0.312 to 0.303), because the reference summaries are not written as labelled lists.</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="example">
+        <figcaption>In our example</figcaption>
+        <p class="text">The model's summary already had the diagnosis, both medicines and the follow-up, but it missed the vital signs. The system added:</p>
+        <p class="text"><mark>Findings: Blood Pressure 120/80 mmHg, Temperature 98.6 F.</mark></p>
+      </figure>
+    </section>
+
+    <!-- 8. SOAP -->
+    <section class="step" id="step-8" aria-labelledby="h-8">
+      <div class="step-head">
+        <span class="step-no">8</span>
+        <div>
+          <h2 id="h-8">Build the SOAP report</h2>
+          <p class="one-line">Fill the four sections of a standard clinical note, using rules that copy facts from the conversation.</p>
+        </div>
+      </div>
+      <div class="block">
+        <h3>How each part is filled</h3>
+        <ul>
+          <li><strong>Patient details</strong>: the name after "Mr.", "Mrs.", "Ms." or "my name is"; the age from phrases like "45 years old"; the gender from words like he, she, male, female.</li>
+          <li><strong>S, Subjective (what the patient says)</strong>
+            <ul>
+              <li>Chief complaint: the patient's "I have…" or "I've been having…" sentence.</li>
+              <li>Symptoms: matched against a list of 69 symptoms, only in the patient's own sentences. Negatives are skipped: the system looks back up to 6 words for "no", "not", "denies", "without" or "never", so "no chest pain" is not listed.</li>
+              <li>Duration: the first time span the patient mentions, such as "3 days", ignoring ages.</li>
+              <li>Past history: a list of 45 conditions, plus "allergic to …".</li>
+              <li>Current medicines: drugs the patient says they take, with the dose they say. Questions such as "Do I need an antibiotic?" are ignored.</li>
+            </ul>
+          </li>
+          <li><strong>O, Objective (what the doctor finds)</strong>: examination sentences ("Examination shows…", "Lungs are clear…") and every reading with its unit.</li>
+          <li><strong>A, Assessment</strong>: the diagnosis and the fact-checked summary.</li>
+          <li><strong>P, Plan</strong>: medicines the doctor prescribes, with dose and frequency. The sentence must contain a prescribing word (prescribe, take, start, increase, add, continue, use) and must not be a question. Then advice (rest, drink, avoid, tests) and follow-up.</li>
+          <li><strong>Recognising medicines</strong>: 107 drug names, plus common drug-name endings (-pril, -sartan, -olol, -statin, -prazole, -cillin, -mycin, -floxacin, -triptan, -gliflozin and more) to catch drugs that are not on the list.</li>
+          <li>When something was not said, the report says so, for example "No examination findings recorded". It never fills a gap with a guess.</li>
+        </ul>
+      </div>
+      <div class="cols">
+        <div class="block">
+          <h3>Why rules instead of AI here</h3>
+          <ul>
+            <li>Doctors must be able to trust every dose. Rules only copy what was said, so they cannot invent a number.</li>
+            <li>Each entry can be traced back to a sentence in the conversation, which makes the report easy to check.</li>
+            <li>SOAP is the note format doctors already use, so the report fits their workflow.</li>
+          </ul>
+        </div>
+        <div class="callout">
+          <h3>Known gaps, next on our list</h3>
+          <ul>
+            <li>The symptom list misses everyday words: "nauseous" and "throw up" in our example were not listed.</li>
+            <li>"Migraine" was also put under past history, because it is on the history list.</li>
+            <li>Small wording glitches, such as the complaint starting "Been having…".</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="example">
+        <figcaption>The real report for our example</figcaption>
+        <div class="soap-report">
+          <div class="soap-row"><span class="soap-letter" aria-hidden="true">S</span><div class="soap-body"><span class="h">Subjective</span>
+            <dl>
+              <dt>Complaint</dt><dd>Been having severe throbbing headaches for the past 3 days, mostly on the left side of my head</dd>
+              <dt>Symptoms</dt><dd>Headache</dd>
+              <dt>Duration</dt><dd>3 days</dd>
+              <dt>History</dt><dd>Migraine</dd>
+              <dt>Current medicines</dt><dd>Ibuprofen 400 mg twice a day</dd>
+            </dl></div></div>
+          <div class="soap-row"><span class="soap-letter" aria-hidden="true">O</span><div class="soap-body"><span class="h">Objective</span>
+            <dl>
+              <dt>Examination</dt><dd>Physical examination is unremarkable</dd>
+              <dt>Readings</dt><dd>Blood Pressure: 120/80 mmHg · Temperature: 98.6 F</dd>
+            </dl></div></div>
+          <div class="soap-row"><span class="soap-letter" aria-hidden="true">A</span><div class="soap-body"><span class="h">Assessment</span>
+            <dl>
+              <dt>Diagnosis</dt><dd>Acute migraine headache</dd>
+              <dt>Summary</dt><dd>The fact-checked summary from step 7</dd>
+            </dl></div></div>
+          <div class="soap-row"><span class="soap-letter" aria-hidden="true">P</span><div class="soap-body"><span class="h">Plan</span>
+            <dl>
+              <dt>Prescribed</dt><dd>Paracetamol 500 mg · Sumatriptan 50 mg</dd>
+              <dt>Advice</dt><dd>Rest in a dark quiet room and drink plenty of fluids · Take at the onset of severe pain</dd>
+              <dt>Follow-up</dt><dd>1 week if the migraine episodes continue</dd>
+            </dl></div></div>
+        </div>
+        <p class="note">Ibuprofen is listed under current medicines (the patient was already taking it), not under prescribed.</p>
+      </figure>
+    </section>
+
+    <!-- 9. SAVE -->
+    <section class="step" id="step-9" aria-labelledby="h-9">
+      <div class="step-head">
+        <span class="step-no">9</span>
+        <div>
+          <h2 id="h-9">Save, search and download</h2>
+          <p class="one-line">Store each report so it can be found and reopened later.</p>
+        </div>
+      </div>
+      <div class="cols">
+        <div class="block">
+          <h3>How it works</h3>
+          <ol>
+            <li>The doctor reviews the report and clicks <strong>Save</strong>.</li>
+            <li>The server stores one row in a SQLite database: consultation ID, patient ID, doctor, date and time, audio file name, raw transcript, clean transcript, summary, the full SOAP report and the model used.</li>
+            <li><strong>Search</strong> looks for the typed text in the consultation ID, patient ID, doctor name and transcript.</li>
+            <li><strong>View</strong> reopens a saved report, <strong>Download</strong> creates a .txt file laid out in SOAP order, and <strong>Delete</strong> removes it.</li>
+          </ol>
+        </div>
+        <div class="block">
+          <h3>Why SQLite</h3>
+          <ul>
+            <li>The whole database is one file, with no database server to install.</li>
+            <li>It is built into Python and is enough for one clinic computer.</li>
+            <li>Reports saved before the SOAP change still open, mapped onto the SOAP sections.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="tools">Tools: <span class="chip">SQLite</span><span class="chip">FastAPI</span></p>
+    </section>
+
+    <!-- 10. MEASURE -->
+    <section class="step" id="step-10" aria-labelledby="h-10">
+      <div class="step-head">
+        <span class="step-no">10</span>
+        <div>
+          <h2 id="h-10">Measure accuracy</h2>
+          <p class="one-line">Score every step with a number, and compare against the published project on the same data.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Measure</th><th>What it checks</th><th>How it is calculated</th></tr></thead>
+          <tbody>
+            <tr><td class="first">ROUGE-1, ROUGE-2, ROUGE-L</td><td>Is the summary close to a human-written one?</td><td>ROUGE-1 counts matching single words, ROUGE-2 matching word pairs, ROUGE-L the longest matching run of words in order. Words are cut to their root first ("headaches" becomes "headach"). Score from 0 to 1, averaged over all cases.</td></tr>
+            <tr><td class="first">Facts kept</td><td>Did the summary keep the critical details?</td><td>Take every number and drug name in the reference summary, then count how many also appear in our summary.</td></tr>
+            <tr><td class="first">Speaker accuracy</td><td>Did step 4 label the speakers correctly?</td><td>Take conversations whose speakers are known, remove the labels, run step 4, and count the share of words given back to the right speaker.</td></tr>
+            <tr><td class="first">Word error rate</td><td>How many words does Whisper get wrong?</td><td>Run Whisper on the spoken benchmark, then count the words it swapped, missed or added, divided by the words actually spoken. Lower is better.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="block">
+        <h3>Keeping it fair</h3>
+        <ul>
+          <li>The published project's original code was run unchanged, on the same computer, with the same data and the same scoring scripts.</li>
+          <li>MTS-Dialog was never used while building our rules, so its results show performance on new conversations.</li>
+          <li>Every result can be repeated with the scripts in the project's <code>scripts</code> folder.</li>
+        </ul>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Results so far</th><th class="num">Published project</th><th class="num">Our project</th></tr></thead>
+          <tbody>
+            <tr><td>Speaker accuracy, 250 unseen conversations</td><td class="num">52.5%</td><td class="num good">88.4%</td></tr>
+            <tr><td>Summary ROUGE-L, T5, benchmark</td><td class="num">0.192</td><td class="num good">0.303</td></tr>
+            <tr><td>Facts kept in the summary, T5, benchmark</td><td class="num">29.0%</td><td class="num good">88.9%</td></tr>
+            <tr><td>Report format</td><td class="num">9 custom sections</td><td class="num good">SOAP</td></tr>
+            <tr><td>Summary ROUGE-L, BART, 53 unseen MTS-Dialog notes</td><td class="num">0.153</td><td class="num good">0.252</td></tr>
+            <tr><td>Summary ROUGE-L, T5, 53 unseen MTS-Dialog notes</td><td class="num">0.173</td><td class="num good">0.229</td></tr>
+            <tr><td>Whisper word error rate</td><td class="num">tiny model</td><td class="num">being measured</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="step" id="tools" aria-labelledby="h-tools">
+      <div class="step-head">
+        <span class="step-no" aria-hidden="true">·</span>
+        <div><h2 id="h-tools">Tools and hardware</h2></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tool</th><th>Used for</th></tr></thead>
+          <tbody>
+            <tr><td class="first">Python 3.13</td><td>The whole backend and all scripts</td></tr>
+            <tr><td class="first">FastAPI and Uvicorn</td><td>The web server and its API (upload, transcribe, summarise, save, search, export, evaluate)</td></tr>
+            <tr><td class="first">HTML, CSS, JavaScript</td><td>The web page: recording, transcript view, report view, database tab, evaluation tab</td></tr>
+            <tr><td class="first">PyTorch 2.14 with CUDA 13</td><td>Runs the AI models on the GPU</td></tr>
+            <tr><td class="first">Hugging Face Transformers</td><td>Downloads and runs the BART and T5 models</td></tr>
+            <tr><td class="first">OpenAI Whisper and FFmpeg</td><td>Speech to text, and audio conversion</td></tr>
+            <tr><td class="first">SQLite</td><td>The report database</td></tr>
+            <tr><td class="first">rouge-score</td><td>The ROUGE measure</td></tr>
+            <tr><td class="first">Laptop with NVIDIA RTX 4050 (6 GB)</td><td>All experiments; the system also runs on a CPU, more slowly</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="step" id="glossary" aria-labelledby="h-gloss">
+      <div class="step-head">
+        <span class="step-no" aria-hidden="true">·</span>
+        <div><h2 id="h-gloss">Glossary</h2></div>
+      </div>
+      <dl class="glossary">
+        <div><dt>Pretrained model</dt><dd>A model already trained by someone else on a large amount of data, which we reuse as it is.</dd></div>
+        <div><dt>Fine-tuning</dt><dd>Extra training of a pretrained model on a smaller, task-specific dataset, such as SAMSum for dialogue summaries.</dd></div>
+        <div><dt>Transfer learning</dt><dd>Using knowledge a model learned on one task for another task.</dd></div>
+        <div><dt>Transformer</dt><dd>The neural-network design behind Whisper, BART and T5. It uses attention to relate every word to every other word.</dd></div>
+        <div><dt>Encoder and decoder</dt><dd>The encoder reads and understands the input; the decoder writes the output one token at a time.</dd></div>
+        <div><dt>Token</dt><dd>A word or part of a word, turned into a number the model can work with.</dd></div>
+        <div><dt>Parameters</dt><dd>The numbers inside a model that it learned during training. More parameters usually means a more capable but slower model.</dd></div>
+        <div><dt>Beam search</dt><dd>Keeping several candidate sentences while writing and choosing the best finished one.</dd></div>
+        <div><dt>Spectrogram</dt><dd>A picture of sound showing which pitches are loud at each moment.</dd></div>
+        <div><dt>Regular expression</dt><dd>A text pattern used to find or replace words, such as "a number followed by mg".</dd></div>
+        <div><dt>SOAP note</dt><dd>The standard clinical note layout: Subjective, Objective, Assessment, Plan.</dd></div>
+        <div><dt>Held-out (unseen) data</dt><dd>Test data never used while building the system, so the score shows real performance.</dd></div>
+        <div><dt>GPU</dt><dd>A graphics processor. It runs the many small calculations of AI models in parallel, much faster than a CPU.</dd></div>
+        <div><dt>ROUGE</dt><dd>A standard score for summaries: how much of a human-written reference summary the generated summary matches.</dd></div>
+        <div><dt>Word error rate</dt><dd>The share of spoken words that speech-to-text got wrong.</dd></div>
+      </dl>
+    </section>
+
+    <footer>Clinical Report AI is a documentation aid. It does not diagnose or choose treatment; the doctor reviews every report.</footer>
+  </main>
+</div>

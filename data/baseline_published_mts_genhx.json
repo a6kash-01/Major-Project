@@ -1,0 +1,2427 @@
+{
+  "num_test_cases": 53,
+  "overall_winner": "T5",
+  "models": {
+    "BART": {
+      "rouge1": {
+        "precision": 0.3547,
+        "recall": 0.1884,
+        "f1": 0.2275
+      },
+      "rouge2": {
+        "precision": 0.1024,
+        "recall": 0.0501,
+        "f1": 0.0624
+      },
+      "rougeL": {
+        "precision": 0.2362,
+        "recall": 0.128,
+        "f1": 0.1532
+      }
+    },
+    "T5": {
+      "rouge1": {
+        "precision": 0.434,
+        "recall": 0.1839,
+        "f1": 0.2415
+      },
+      "rouge2": {
+        "precision": 0.1256,
+        "recall": 0.0512,
+        "f1": 0.0679
+      },
+      "rougeL": {
+        "precision": 0.3093,
+        "recall": 0.1317,
+        "f1": 0.173
+      }
+    }
+  },
+  "detailed_cases": [
+    {
+      "case_id": "0",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 55-year-old African-American male that was last seen in clinic on 07/29/2008 with diagnosis of new onset seizures and an MRI scan, which demonstrated right contrast-enhancing temporal mass.  Given the characteristics of this mass and his new onset seizures, it is significantly concerning for a high-grade glioma.",
+      "bart": {
+        "summary": "Doctor: Good afternoon, sir. Did you just have a birthday? I don't have my chart with me right now, the nurse is bringing it. Patient: Yes, I just turned fifty five. Doctor: When was your last visit, sir? Patient: It was on July twenty ninth two thousand eight.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2041,
+            "recall": 0.1754,
+            "f1": 0.1887
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.102,
+            "recall": 0.0877,
+            "f1": 0.0943
+          }
+        }
+      },
+      "t5": {
+        "summary": "doctor: \"i just turned fifty five. I don't have my chart with me right now, the nurse is bringing it\" patient: \"i am concerned that this could be a high grade glioma\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3939,
+            "recall": 0.2281,
+            "f1": 0.2889
+          },
+          "rouge2": {
+            "precision": 0.0938,
+            "recall": 0.0536,
+            "f1": 0.0682
+          },
+          "rougeL": {
+            "precision": 0.2727,
+            "recall": 0.1579,
+            "f1": 0.2
+          }
+        }
+      }
+    },
+    {
+      "case_id": "6",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 77-year-old female who is unable to give any information.  She has been sedated with Ativan and came into the emergency room obtunded and unable to give any history.  On a chest x-ray for what appeared to be shortness of breath she was found to have what was thought to be free air under the right diaphragm.",
+      "bart": {
+        "summary": "Doctor: She was sedated with Ativan, correct? Doctor: Yeah, we had to sedate her. She wasn't doing so well upon arrival and appeared short of breath.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4444,
+            "recall": 0.1905,
+            "f1": 0.2667
+          },
+          "rouge2": {
+            "precision": 0.1923,
+            "recall": 0.0806,
+            "f1": 0.1136
+          },
+          "rougeL": {
+            "precision": 0.3333,
+            "recall": 0.1429,
+            "f1": 0.2
+          }
+        }
+      },
+      "t5": {
+        "summary": "guest_clinician: \"she wasn't doing so well upon arrival and appeared short of breath\" doctor: \"we immediately had Xray come in to scan her lungs\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2692,
+            "recall": 0.1111,
+            "f1": 0.1573
+          },
+          "rouge2": {
+            "precision": 0.08,
+            "recall": 0.0323,
+            "f1": 0.046
+          },
+          "rougeL": {
+            "precision": 0.2692,
+            "recall": 0.1111,
+            "f1": 0.1573
+          }
+        }
+      }
+    },
+    {
+      "case_id": "10",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 79-year-old African-American female with a self reported height of 5 foot 3 inches and weight of 197 pounds.  She was diagnosed with type 2 diabetes in 1983.  She is not allergic to any medicines.",
+      "bart": {
+        "summary": "Doctor: Good afternoon, ma'am. Can you tell me more about yourself, please? Patient: Well, I'm seventy nine, and I'm an African American women. Doctor: Did the nurses get your height? patient: No, they didn't.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.1579,
+            "recall": 0.1463,
+            "f1": 0.1519
+          },
+          "rouge2": {
+            "precision": 0.027,
+            "recall": 0.025,
+            "f1": 0.026
+          },
+          "rougeL": {
+            "precision": 0.1053,
+            "recall": 0.0976,
+            "f1": 0.1013
+          }
+        }
+      },
+      "t5": {
+        "summary": "patient: I'm five foot three inches, and I'm an african american woman . doctor: I'm about one hundred ninety seven pounds . patient: I've had type two diabetes since nineteen eighty three .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2647,
+            "recall": 0.2195,
+            "f1": 0.24
+          },
+          "rouge2": {
+            "precision": 0.0606,
+            "recall": 0.05,
+            "f1": 0.0548
+          },
+          "rougeL": {
+            "precision": 0.2059,
+            "recall": 0.1707,
+            "f1": 0.1867
+          }
+        }
+      }
+    },
+    {
+      "case_id": "14",
+      "title": "GENHX",
+      "reference_summary": "Negative for use of alcohol or tobacco.",
+      "bart": {
+        "summary": "Excessive drinking can cause issues with the liver. I take a lot of Tylenol for pain and I am worried it is effecting my liver. Do you happen to smoke?",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.0667,
+            "recall": 0.2857,
+            "f1": 0.1081
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.0333,
+            "recall": 0.1429,
+            "f1": 0.0541
+          }
+        }
+      },
+      "t5": {
+        "summary": "excessive drinking can cause issues with the liver . patient: i take a lot of Tylenol for pain and am worried it is effecting my liver . patient: i do not smoke .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.0667,
+            "recall": 0.2857,
+            "f1": 0.1081
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.0333,
+            "recall": 0.1429,
+            "f1": 0.0541
+          }
+        }
+      }
+    },
+    {
+      "case_id": "19",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 49-year-old white female, established patient to Dermatology, last seen in the office on 08/10/2004.  She comes in today for reevaluation of her acne plus she has had what she calls a rash for the past two months now on her chest, stomach, neck, and back.  On examination, this is a flaring of her acne with small folliculitis lesions.  The patient has been taking amoxicillin 500 mg b.i.d. and using Tazorac cream 0.1, and her face is doing well, but she has been out of her medicine now for three days also.  She has also been getting photofacials at Healing Waters and was wondering about what we could offer as far as cosmetic procedures and skin care products, etc.  The patient is married.  She is a secretary.",
+      "bart": {
+        "summary": "Doctor: Nice to see you again, miss. How is your acne doing? Patient: I've had this rash for the last two months on my chest, stomach, neck, and back. Doctor: It's treatable. It seems like it's happening because your acne is flaring up.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5,
+            "recall": 0.1679,
+            "f1": 0.2514
+          },
+          "rouge2": {
+            "precision": 0.1556,
+            "recall": 0.0515,
+            "f1": 0.0773
+          },
+          "rougeL": {
+            "precision": 0.3478,
+            "recall": 0.1168,
+            "f1": 0.1749
+          }
+        }
+      },
+      "t5": {
+        "summary": "i've had this rash for the last two months on my chest, stomach, neck, and back . doctor: it seems like it's happening because your acne is flaring up . patient: i actually started going to Healing Waters to get photofacials .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5854,
+            "recall": 0.1752,
+            "f1": 0.2697
+          },
+          "rouge2": {
+            "precision": 0.225,
+            "recall": 0.0662,
+            "f1": 0.1023
+          },
+          "rougeL": {
+            "precision": 0.439,
+            "recall": 0.1314,
+            "f1": 0.2022
+          }
+        }
+      }
+    },
+    {
+      "case_id": "26",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 68-year-old man who returns for recheck.  He has a history of ischemic cardiac disease, he did see Dr. XYZ in February 2004 and had a thallium treadmill test.  He did walk for 8 minutes.  The scan showed some mild inferior wall scar and ejection fraction was well preserved.  He has not had difficulty with chest pain, palpitations, orthopnea, nocturnal dyspnea, or edema.",
+      "bart": {
+        "summary": "Doctor: Hello, sir. Looks like we are going to revaluate your heart issues. You have a history of ischemic cardiac disease, correct? Patient: Sixty eight. I saw doctor X Y Z in February two thousand four and he made me walk on a treadmill for eight minutes.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3404,
+            "recall": 0.2353,
+            "f1": 0.2783
+          },
+          "rouge2": {
+            "precision": 0.1304,
+            "recall": 0.0896,
+            "f1": 0.1062
+          },
+          "rougeL": {
+            "precision": 0.2766,
+            "recall": 0.1912,
+            "f1": 0.2261
+          }
+        }
+      },
+      "t5": {
+        "summary": "the scan showed some wall scarring but also that the amount of blood left your heart per contraction was normal . do you experience any chest pain, palpitations, difficulty sleeping at night, leg or arm swelling, or shortness of breath while lying flat?",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3333,
+            "recall": 0.2059,
+            "f1": 0.2545
+          },
+          "rouge2": {
+            "precision": 0.1463,
+            "recall": 0.0896,
+            "f1": 0.1111
+          },
+          "rougeL": {
+            "precision": 0.2619,
+            "recall": 0.1618,
+            "f1": 0.2
+          }
+        }
+      }
+    },
+    {
+      "case_id": "31",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 55-year-old gentleman who presents for further evaluation of right leg weakness.  He has difficulty recollecting the exact details and chronology of his problem.  To the best of his recollection, he thinks that about six months ago he developed weakness of his right leg.  He describes that he is reaching to get something from a cabinet and he noticed that he was unable to stand on his right toe.  Since that time, he has had difficulty pushing off when he walks.  He has mild tingling and numbness in his toes, but this has been a chronic problem and nothing new since he has developed the weakness.  He has chronic mild back pain, but this has been persistent for many years and has not changed.  He has experienced cramps in both calves for the past year.  This dissipated about two months ago.  He does not think that his left leg is weak.  He does not have any bowel or bladder incontinence.  There is no radicular pain.  He does not think that the problem is progressive, meaning that the weakness that he perceives in his right leg is no different than when it was six months ago. He first sought medical attention for this problem in October.  He then saw you a couple of months later.  He has undergone an EMG and nerve conduction studies.  Unfortunately, he cannot undergo an MRI of his spine because he has an ear implant.  He has had a CT scan that shows degenerative changes, but nothing obviously abnormal. In addition, the patient has hyperCKemia.  He tells me that he has had an elevated CK prior to starting taking stat medications, although this is not entirely clear to me.  He thinks that he is not taking Lipitor for about 15 months and thought that his CK was in the 500 or 600s prior to starting it.  Once it was started, it increased to about 800 and then came down to about 500 when it was stopped.  He then had a recent bump again up to the 1000 and since Lipitor has been stopped, his CK apparently has returned to about the 500 or 600s.  I do no have any laboratory data to support these statements by the patient, but he seems to be up to speed on this.  More recently, he has been started taking Zetia. He does not have any proximal weakness.  He denies any myalgias.",
+      "bart": {
+        "summary": "Patient: I have had this weakness in my right leg for quite some time now. I was reaching to get something from a cabinet and I noticed that I was unable to stand on my right toe",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.7838,
+            "recall": 0.0716,
+            "f1": 0.1312
+          },
+          "rouge2": {
+            "precision": 0.3889,
+            "recall": 0.0347,
+            "f1": 0.0636
+          },
+          "rougeL": {
+            "precision": 0.5676,
+            "recall": 0.0519,
+            "f1": 0.095
+          }
+        }
+      },
+      "t5": {
+        "summary": "the weakness in my right leg started about six months ago . my toes were tingling and numb . everything that is going on with my right leg has pretty much been the",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.7097,
+            "recall": 0.0543,
+            "f1": 0.1009
+          },
+          "rouge2": {
+            "precision": 0.2667,
+            "recall": 0.0198,
+            "f1": 0.0369
+          },
+          "rougeL": {
+            "precision": 0.5806,
+            "recall": 0.0444,
+            "f1": 0.0826
+          }
+        }
+      }
+    },
+    {
+      "case_id": "36",
+      "title": "GENHX",
+      "reference_summary": "This is a 56-year-old female who fell on November 26, 2007 at 11:30 a.m. while at work.  She did not recall the specifics of her injury but she thinks that her right foot inverted and subsequently noticed pain in the right ankle.  She describes no other injury at this time.",
+      "bart": {
+        "summary": "Doctor: Good, what's a young lady like you doing in my office? I hear you got hurt, what happened? Patient: I don't remember exactly what happened, but my foot twisted and there was so much pain right away.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.175,
+            "recall": 0.1296,
+            "f1": 0.1489
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.15,
+            "recall": 0.1111,
+            "f1": 0.1277
+          }
+        }
+      },
+      "t5": {
+        "summary": "doctor: \"my foot twisted and there was so much pain right away\" patient: \"i don't remember exactly what happened, but my foot twisted and there was so much pain right away\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.1875,
+            "recall": 0.1111,
+            "f1": 0.1395
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.1562,
+            "recall": 0.0926,
+            "f1": 0.1163
+          }
+        }
+      }
+    },
+    {
+      "case_id": "38",
+      "title": "GENHX",
+      "reference_summary": "This is a 36-year-old white female who presents to the office today with a complaint of left knee pain.  She is approximately five days after a third Synvisc injection.  She states that the knee is 35% to 40 % better, but continues to have a constant pinching pain when she full weight bears, cannot handle having her knee in flexion, has decreased range of motion with extension.  Rates her pain in her knee as a 10/10.  She does alternate ice and heat.  She is using Tylenol No. 3 p.r.n. and ibuprofen OTC p.r.n. with minimal relief.",
+      "bart": {
+        "summary": "Doctor: Good morning, ma'am. Did you have a good thirty-sixth birthday? Patient: Yes, thank you. It was a nice day, despite the knee pain. Doctor: You've had three Synvisc injections, correct? When was your last one?",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2564,
+            "recall": 0.098,
+            "f1": 0.1418
+          },
+          "rouge2": {
+            "precision": 0.1053,
+            "recall": 0.0396,
+            "f1": 0.0576
+          },
+          "rougeL": {
+            "precision": 0.1795,
+            "recall": 0.0686,
+            "f1": 0.0993
+          }
+        }
+      },
+      "t5": {
+        "summary": "doctor: \"i can't bend this knee at all. I can't handle that bending, doctor\" patient: \"it hurts really bad, doctor. I alternate the two\" patient: \"i'm using that Tylenol with codeine and then some ibuprofen\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2895,
+            "recall": 0.1078,
+            "f1": 0.1571
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.2105,
+            "recall": 0.0784,
+            "f1": 0.1143
+          }
+        }
+      }
+    },
+    {
+      "case_id": "42",
+      "title": "GENHX",
+      "reference_summary": "This 68-year-old man presents to the emergency department for three days of cough, claims that he has brought up some green and grayish sputum.  He says he does not feel short of breath.  He denies any fever or chills.",
+      "bart": {
+        "summary": "Doctor: How are you? Patient: I am well, I have a bad cough and some green, grey things are coming out. Doctor: Oh I am sorry, is it causing any shortness of breath? patient: No, I don't feel short of breath.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2381,
+            "recall": 0.2439,
+            "f1": 0.241
+          },
+          "rouge2": {
+            "precision": 0.0976,
+            "recall": 0.1,
+            "f1": 0.0988
+          },
+          "rougeL": {
+            "precision": 0.1667,
+            "recall": 0.1707,
+            "f1": 0.1687
+          }
+        }
+      },
+      "t5": {
+        "summary": "i have been having a bad cough and some green, grey things are coming out . i am well, I have a bad cough and some green, grey things are coming out . i am sixty eight years old.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.1622,
+            "recall": 0.1463,
+            "f1": 0.1538
+          },
+          "rouge2": {
+            "precision": 0.0556,
+            "recall": 0.05,
+            "f1": 0.0526
+          },
+          "rougeL": {
+            "precision": 0.1081,
+            "recall": 0.0976,
+            "f1": 0.1026
+          }
+        }
+      }
+    },
+    {
+      "case_id": "45",
+      "title": "GENHX",
+      "reference_summary": "The patient has NG tube in place for decompression.  She says she is feeling a bit better.",
+      "bart": {
+        "summary": "Doctor: You were placed on nasogastric tube for decompression, right? Patient: Yes. Doctor: And how do you",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2941,
+            "recall": 0.2941,
+            "f1": 0.2941
+          },
+          "rouge2": {
+            "precision": 0.0625,
+            "recall": 0.0625,
+            "f1": 0.0625
+          },
+          "rougeL": {
+            "precision": 0.1765,
+            "recall": 0.1765,
+            "f1": 0.1765
+          }
+        }
+      },
+      "t5": {
+        "summary": "nasogastric tube placed on nasogastric tube for decompression . patient: \"i am",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4545,
+            "recall": 0.2941,
+            "f1": 0.3571
+          },
+          "rouge2": {
+            "precision": 0.1,
+            "recall": 0.0625,
+            "f1": 0.0769
+          },
+          "rougeL": {
+            "precision": 0.3636,
+            "recall": 0.2353,
+            "f1": 0.2857
+          }
+        }
+      }
+    },
+    {
+      "case_id": "49",
+      "title": "GENHX",
+      "reference_summary": "The patient comes back to see me today.  She is a pleasant 77-year-old Caucasian female who had seen Dr. XYZ with right leg pain.  She has a history of prior laminectomy for spinal stenosis.  She has seen Dr. XYZ with low back pain and lumbar scoliosis post laminectomy syndrome, lumbar spinal stenosis, and clinical right L2 radiculopathy, which is symptomatic.  Dr. XYZ had performed two right L2-L3 transforaminal epidural injections, last one in March 2005.  She was subsequently seen and Dr. XYZ found most of her remaining symptoms are probably coming from her right hip.  An x-ray of the hip showed marked degenerative changes with significant progression of disease compared to 08/04/2004 study.  Dr. XYZ had performed right intraarticular hip injection on 04/07/2005.  She was last seen on 04/15/2005.  At that time, she had the hip injection that helped her briefly with her pain.  She is not sure whether or not she wants to proceed with hip replacement.  We recommend she start using a cane and had continued her on some pain medicines. The patient comes back to see me today.  She continues to complain of significant pain in her right hip, especially with weightbearing or with movement.  She said she had made an appointment to see an orthopedic surgeon in Newton as it is closer and more convenient for her.  She is taking Ultracet or other the generic it sounds like, up to four times daily.  She states she can take this much more frequently as she still has significant pain symptoms.  She is using a cane to help her ambulate.",
+      "bart": {
+        "summary": "Doctor: Good morning, ma'am. You're here for a follow up, correct? Patient: Yes, doctor. Guess what, I just had my seventy seventh",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2083,
+            "recall": 0.0184,
+            "f1": 0.0338
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.1667,
+            "recall": 0.0147,
+            "f1": 0.027
+          }
+        }
+      },
+      "t5": {
+        "summary": "doctor X Y Z treated me for back pain, lumbar scoliosis, spinal stenosis, symptomatic right L two radiculopathy .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.7222,
+            "recall": 0.0478,
+            "f1": 0.0897
+          },
+          "rouge2": {
+            "precision": 0.1765,
+            "recall": 0.0111,
+            "f1": 0.0208
+          },
+          "rougeL": {
+            "precision": 0.5556,
+            "recall": 0.0368,
+            "f1": 0.069
+          }
+        }
+      }
+    },
+    {
+      "case_id": "50",
+      "title": "GENHX",
+      "reference_summary": "The patient has a previous history of a left traumatic wrist injury, which has left him with a chronic scapholunate problem and possibly other problems in his wrist.  However, he was doing relatively fine and tolerating the wrist soreness that he had, which is day to day, but it has not gotten much worse until this injury.  Once he lifted the object out of the back of his car and it started to hurt, then he was significantly more affected than he was before, and now pain is more on the ulnar side of his wrist than on the radial side of his wrist.  He is here now for evaluation.",
+      "bart": {
+        "summary": "Doctor: Hello, sir. Patient: I hurt my left wrist again. Doctor: Oh, no. Again? Did you hurt it before? Patient: Yeah, I did. I've actually hurt it a lot. The most recent one was probably the worst pain of my life.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3095,
+            "recall": 0.1182,
+            "f1": 0.1711
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.1905,
+            "recall": 0.0727,
+            "f1": 0.1053
+          }
+        }
+      },
+      "t5": {
+        "summary": "the most recent one was probably the worst pain of my life . doctor: \"i just lived with it. some days it would be fine, but other days it would hurt a little more\" patient: \"i feel it now more near my pinky area than my thumb area\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4255,
+            "recall": 0.1818,
+            "f1": 0.2548
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.234,
+            "recall": 0.1,
+            "f1": 0.1401
+          }
+        }
+      }
+    },
+    {
+      "case_id": "62",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 17-year-old female, who presents to the emergency room with foreign body and airway compromise and was taken to the operating room.  She was intubated and fishbone.",
+      "bart": {
+        "summary": "A 17-year-old girl had a fishbone lodged in her throat. She had to be intubated and taken straight to",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5238,
+            "recall": 0.3438,
+            "f1": 0.4151
+          },
+          "rouge2": {
+            "precision": 0.2,
+            "recall": 0.129,
+            "f1": 0.1569
+          },
+          "rougeL": {
+            "precision": 0.381,
+            "recall": 0.25,
+            "f1": 0.3019
+          }
+        }
+      },
+      "t5": {
+        "summary": "a two millimeter fishbone was lodged in the patient's throat . she had to be intubated and taken straight",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5263,
+            "recall": 0.3125,
+            "f1": 0.3922
+          },
+          "rouge2": {
+            "precision": 0.1111,
+            "recall": 0.0645,
+            "f1": 0.0816
+          },
+          "rougeL": {
+            "precision": 0.3158,
+            "recall": 0.1875,
+            "f1": 0.2353
+          }
+        }
+      }
+    },
+    {
+      "case_id": "63",
+      "title": "GENHX",
+      "reference_summary": "This is a followup dietary consultation for hyperlipidemia, hypertension, and possible metabolic syndrome.  The patient reports that she has worked hard for a number of weeks following the meal plan prescribed, but felt like she was gaining weight and not losing weight on it.  She is not sure that she was following it accurately.  She is trying to walk 1-1/2 to 2 miles every other day, but is increasing her time in the garden and doing other yard work as well.  Once she started experiencing some weight gain, she went back to her old South Beach Diet and felt like she was able to take some of that weight off.  However she realizes that the South Beach Diet is not a healthy diet for her and so is coming back for better instruction on safe weight loss and low-fat eating.",
+      "bart": {
+        "summary": "Doctor: Hello there, how are you doing? Patient: I'm doing good. How about you? Doctor: Yeah, same old,Same old. Doctor: So, looks like we're here to discuss your diet. Is that right",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2571,
+            "recall": 0.0629,
+            "f1": 0.1011
+          },
+          "rouge2": {
+            "precision": 0.0294,
+            "recall": 0.007,
+            "f1": 0.0114
+          },
+          "rougeL": {
+            "precision": 0.2,
+            "recall": 0.049,
+            "f1": 0.0787
+          }
+        }
+      },
+      "t5": {
+        "summary": "i tried for many weeks to follow the meal plan that you gave me . patient: \"deep in my heart i know this South Beach Diet is not a healthy diet for me\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.6562,
+            "recall": 0.1469,
+            "f1": 0.24
+          },
+          "rouge2": {
+            "precision": 0.3548,
+            "recall": 0.0775,
+            "f1": 0.1272
+          },
+          "rougeL": {
+            "precision": 0.5312,
+            "recall": 0.1189,
+            "f1": 0.1943
+          }
+        }
+      }
+    },
+    {
+      "case_id": "67",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 56-year-old right-handed female with longstanding intermittent right low back pain, who was involved in a motor vehicle accident in September of 2005.  At that time, she did not notice any specific injury.  Five days later, she started getting abnormal right low back pain.  At this time, it radiates into the buttocks down the posterior aspect of her thigh and into the right lateral aspect of her calf.  Symptoms are worse when sitting for any length of time, such as driving a motor vehicle.  Mild symptoms when walking for long periods of time.  Relieved by standing and lying down.  She denies any left leg symptoms or right leg weakness.  No change in bowel or bladder function.  Symptoms have slowly progressed.  She has had Medrol Dosepak and analgesics, which have not been very effective.  She underwent a spinal epidural injection, which was effective for the first few hours, but she had recurrence of the pain by the next day.  This was done four and a half weeks ago. On examination, lower extremities strength is full and symmetric.  Straight leg raising is normal.",
+      "bart": {
+        "summary": "\"I started getting this abnormal like pain in the lower side of my back, especially on the right side\" \"It gets worse when I'm sitting for a longer period, such as like driving or if I'm walking for a long period of time\" \"I had the pain killers, Medrol but, it has not been very effective\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.6897,
+            "recall": 0.2139,
+            "f1": 0.3265
+          },
+          "rouge2": {
+            "precision": 0.2281,
+            "recall": 0.0699,
+            "f1": 0.107
+          },
+          "rougeL": {
+            "precision": 0.4655,
+            "recall": 0.1444,
+            "f1": 0.2204
+          }
+        }
+      },
+      "t5": {
+        "summary": "five days after accident, i started getting abnormal like pain in the lower side of my back . it like moved from there to my buttocks on the posterior side on my thigh and on outside of my calf . it gets worse when I'm sitting for a longer period, such as like driving .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.566,
+            "recall": 0.1604,
+            "f1": 0.25
+          },
+          "rouge2": {
+            "precision": 0.1538,
+            "recall": 0.043,
+            "f1": 0.0672
+          },
+          "rougeL": {
+            "precision": 0.3962,
+            "recall": 0.1123,
+            "f1": 0.175
+          }
+        }
+      }
+    },
+    {
+      "case_id": "74",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 68-year-old female with a history of knee pain for 13 years.  She had previous total knee arthroplasty and revision at an outside facility.  She had continued pain, snapping, malalignment, difficulty with ambulation, and giving away and wished to undergo additional revision surgery.",
+      "bart": {
+        "summary": "Doctor: What's a young lady like you doing in my office today? Patient: I'm not as young as I used to be, I'm sixty eight years old now. Doctor: So, what seems to be the problem today? patient: Well, I've had knee pain for about thirteen years now.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2115,
+            "recall": 0.2292,
+            "f1": 0.22
+          },
+          "rouge2": {
+            "precision": 0.0588,
+            "recall": 0.0638,
+            "f1": 0.0612
+          },
+          "rougeL": {
+            "precision": 0.1346,
+            "recall": 0.1458,
+            "f1": 0.14
+          }
+        }
+      },
+      "t5": {
+        "summary": "patient: i've had knee pain for about thirteen years now . patient: i have so much pain, and i feel snapping, i'm also having trouble walking .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3333,
+            "recall": 0.1875,
+            "f1": 0.24
+          },
+          "rouge2": {
+            "precision": 0.0769,
+            "recall": 0.0426,
+            "f1": 0.0548
+          },
+          "rougeL": {
+            "precision": 0.2593,
+            "recall": 0.1458,
+            "f1": 0.1867
+          }
+        }
+      }
+    },
+    {
+      "case_id": "75",
+      "title": "GENHX",
+      "reference_summary": "The patient has been doing quite well since he was last seen.  He comes in today with his daughter.  He has had no symptoms of CAD or CHF.  He had followup with Dr. X and she thought he was doing quite well as well.  He has had no symptoms of hyperglycemia or hypoglycemia.  He has had no falls.  His right knee does pain him at times and he is using occasional doses of Tylenol for that.  He wonders whether he could use a knee brace to help him with that issue as well.  His spirits are good.  He has had no incontinence.  His memory is clear, as is his thinking.",
+      "bart": {
+        "summary": "Doctor: Good afternoon, sir, and who is this with you today? Patient: How are you doing, doctor? This is my daughter. Doctor: I'm doing well, but how are you? How have you been doing since I last saw you? patient: I've been doing quite well, doctor.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3542,
+            "recall": 0.1545,
+            "f1": 0.2152
+          },
+          "rouge2": {
+            "precision": 0.0638,
+            "recall": 0.0275,
+            "f1": 0.0385
+          },
+          "rougeL": {
+            "precision": 0.1667,
+            "recall": 0.0727,
+            "f1": 0.1013
+          }
+        }
+      },
+      "t5": {
+        "summary": "doctor: i've been doing quite well since last visit . patient: no signs of heart disease, or failure . doctor: i just take Tylenol occasionally as needed for the pain . patient: my memory is really clear .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5429,
+            "recall": 0.1727,
+            "f1": 0.2621
+          },
+          "rouge2": {
+            "precision": 0.1471,
+            "recall": 0.0459,
+            "f1": 0.0699
+          },
+          "rougeL": {
+            "precision": 0.4,
+            "recall": 0.1273,
+            "f1": 0.1931
+          }
+        }
+      }
+    },
+    {
+      "case_id": "86",
+      "title": "GENHX",
+      "reference_summary": "Unremarkable.",
+      "bart": {
+        "summary": "Doctor: Do you have any history of psychiatric disorders? Patient: What, like depression? Doctor: Well, it could be anything like",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "t5": {
+        "summary": "patient: \"i don't have anything like that\" doctor: \"it could be anything like depression, or mood disorders\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      }
+    },
+    {
+      "case_id": "91",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 75-year-old, Caucasian female who comes in today with complaint of feeling weak and shaky.  When questioned further, she described shortness of breath primarily with ambulation.  She denies chest pain.  She denies cough, hemoptysis, dyspnea, and wheeze.  She denies syncope, presyncope, or palpitations.  Her symptoms are fairly longstanding but have been worsening as of late.",
+      "bart": {
+        "summary": "Doctor: How old are you madam? Patient: I am seventy-five. I have been feeling very weak and shaky. I cannot catch a breath when I walk. It is getting harder to move around. Doctor: Hm, how about chest pain or palpitations?",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4048,
+            "recall": 0.2833,
+            "f1": 0.3333
+          },
+          "rouge2": {
+            "precision": 0.122,
+            "recall": 0.0847,
+            "f1": 0.1
+          },
+          "rougeL": {
+            "precision": 0.2381,
+            "recall": 0.1667,
+            "f1": 0.1961
+          }
+        }
+      },
+      "t5": {
+        "summary": "i am seventy-five. i cannot catch a breath when I walk. it is getting harder to move around . patient: \"it's been a while now but it is getting worse lately\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.25,
+            "recall": 0.1333,
+            "f1": 0.1739
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.125,
+            "recall": 0.0667,
+            "f1": 0.087
+          }
+        }
+      }
+    },
+    {
+      "case_id": "95",
+      "title": "GENHX",
+      "reference_summary": "This is a return visit to the renal clinic for this patient.  She is an 85-year-old woman with history as noted above.  Her last visit was approximately four months ago.  Since that time, the patient has been considerably more compliant with her antihypertensive medications and actually had a better blood pressure reading today than she had had for many visits previously.  She is not reporting any untoward side effect.  She is not having weakness, dizziness, lightheadedness, nausea, vomiting, constipation, diarrhea, abdominal pain, chest pain, shortness of breath or difficulty breathing.  She has no orthopnea.  Her exercise capacity is about the same.  The only problem she has is musculoskeletal and that pain in the right buttock, she thinks originating from her spine.  No history of extremity pain.",
+      "bart": {
+        "summary": "Doctor: Hello there! Patient: Hi, how are you? Doctor: I am good. Do ypu mind stating your age and waht brings you in today? Patient: Oh, yes, I am 85 years old and I am having this weird muscle pain in",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2927,
+            "recall": 0.0938,
+            "f1": 0.142
+          },
+          "rouge2": {
+            "precision": 0.075,
+            "recall": 0.0236,
+            "f1": 0.0359
+          },
+          "rougeL": {
+            "precision": 0.1951,
+            "recall": 0.0625,
+            "f1": 0.0947
+          }
+        }
+      },
+      "t5": {
+        "summary": "i am 85 years old and I am having weird muscle pain in my rightbuttocks region . I think it's radiating from my lower back or spine area I am not sure .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.375,
+            "recall": 0.0938,
+            "f1": 0.15
+          },
+          "rouge2": {
+            "precision": 0.0968,
+            "recall": 0.0236,
+            "f1": 0.038
+          },
+          "rougeL": {
+            "precision": 0.3125,
+            "recall": 0.0781,
+            "f1": 0.125
+          }
+        }
+      }
+    },
+    {
+      "case_id": "98",
+      "title": "GENHX",
+      "reference_summary": "CORONARY RISK FACTORS: History of hypertension.  No history of diabetes mellitus.  Nonsmoker.  Cholesterol status is borderline elevated.  No history of established coronary artery disease.  Family history noncontributory.",
+      "bart": {
+        "summary": "Doctor: Do you have any personal history of heart disease or diabetes? Patient: No, but I do have high blood pressure. Doctor: Your bloodwork came back with borderline elevated cholesterol levels. I would like",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2353,
+            "recall": 0.2963,
+            "f1": 0.2623
+          },
+          "rouge2": {
+            "precision": 0.0606,
+            "recall": 0.0769,
+            "f1": 0.0678
+          },
+          "rougeL": {
+            "precision": 0.1471,
+            "recall": 0.1852,
+            "f1": 0.1639
+          }
+        }
+      },
+      "t5": {
+        "summary": "patient: no, but I do have high blood pressure . bloodwork came back with borderline elevated cholesterol levels .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2353,
+            "recall": 0.1481,
+            "f1": 0.1818
+          },
+          "rouge2": {
+            "precision": 0.0625,
+            "recall": 0.0385,
+            "f1": 0.0476
+          },
+          "rougeL": {
+            "precision": 0.1765,
+            "recall": 0.1111,
+            "f1": 0.1364
+          }
+        }
+      }
+    },
+    {
+      "case_id": "100",
+      "title": "GENHX",
+      "reference_summary": "The patient is a previously healthy 2-month-old female, who has had a cough and congestion for the past week.  The mother has also reported irregular breathing, which she describes as being rapid breathing associated with retractions.  The mother states that the cough is at times paroxysmal and associated with posttussive emesis.  The patient has had short respiratory pauses following the coughing events.  The patient's temperature has ranged between 102 and 104.  She has had a decreased oral intake and decreased wet diapers.  The brother is also sick with URI symptoms, and the patient has had no diarrhea.  The mother reports that she has begun to regurgitate after her feedings.  She did not do this previously.",
+      "bart": {
+        "summary": "Two-month-old girl has been coughing a lot. She's also running a fever. She hasn't been feeding well and hasn't had as many wet diapers as a result. Her son has an upper respiratory infection. He's been sick for a day or two before her.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.44,
+            "recall": 0.1864,
+            "f1": 0.2619
+          },
+          "rouge2": {
+            "precision": 0.0408,
+            "recall": 0.0171,
+            "f1": 0.0241
+          },
+          "rougeL": {
+            "precision": 0.24,
+            "recall": 0.1017,
+            "f1": 0.1429
+          }
+        }
+      },
+      "t5": {
+        "summary": "guest_family: she's had some irregular breathing where she would breathe very quickly and retract . guest_family: she's been feeding less and hasn't had as many wet diapers as a result . guest_family: my son has an upper respiratory infection .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4419,
+            "recall": 0.161,
+            "f1": 0.236
+          },
+          "rouge2": {
+            "precision": 0.0476,
+            "recall": 0.0171,
+            "f1": 0.0252
+          },
+          "rougeL": {
+            "precision": 0.2791,
+            "recall": 0.1017,
+            "f1": 0.1491
+          }
+        }
+      }
+    },
+    {
+      "case_id": "103",
+      "title": "GENHX",
+      "reference_summary": "The patient had several episodes where she felt like her face was going to twitch, which she could suppress it with grimacing movements of her mouth and face.  She reports she is still having right posterior head pressure like sensations approximately one time per week.  These still are characterized by a tingling, pressure like sensation that often has a feeling as though water is running down on her hair.  This has also decreased in frequency occurring approximately one time per week and seems to respond to over-the-counter analgesics such as Aleve.  Lastly during conversation today, she brought again the problem of daydreaming at work and noted that she occasionally falls asleep when sitting in non-stimulating environments or in front of the television.  She states that she feels fatigued all the time and does not get good sleep.  She describes it as insomnia, but upon questioning she works from 4 till mid night and then gets home and cannot go to sleep for approximately two hours and wakes up reliably by 9.00 a.m. each morning and sleeps no more than five to six hours ever, but usually five hours.  Her sleep is relatively uninterrupted except for the need to get up and go to the bathroom.  She thinks she may snore, but she is not sure.  She does not recall any events of awakening and gasping for breath.",
+      "bart": {
+        "summary": "\"I'm having this weird feeling where I feel that my face is going to twitch and I start doing these grimacing actions on my face, mouth, and then it suppresses it, but I'm not sure what's happening\" \"I'm still having a fear of feeling of pressure in the backside of my head and it comes approximately like once each week. I am taking Aleve and it is helping me\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.589,
+            "recall": 0.1853,
+            "f1": 0.282
+          },
+          "rouge2": {
+            "precision": 0.0972,
+            "recall": 0.0303,
+            "f1": 0.0462
+          },
+          "rougeL": {
+            "precision": 0.2877,
+            "recall": 0.0905,
+            "f1": 0.1377
+          }
+        }
+      },
+      "t5": {
+        "summary": "i'm still having a fear of feeling of pressure in the backside of my head . it feels like pins and needles in my head and a lot of pressure and often it feels like water is running down my hair . i'm still suffering from that problem of daydreaming at work .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.7115,
+            "recall": 0.1595,
+            "f1": 0.2606
+          },
+          "rouge2": {
+            "precision": 0.1569,
+            "recall": 0.0346,
+            "f1": 0.0567
+          },
+          "rougeL": {
+            "precision": 0.3462,
+            "recall": 0.0776,
+            "f1": 0.1268
+          }
+        }
+      }
+    },
+    {
+      "case_id": "107",
+      "title": "GENHX",
+      "reference_summary": "This is a 56-year-old white male who has been complaining of having had a lump in the chest for the past year or so and it has been getting larger and tender according to the patient.  It is tender on palpation and also he feels like, when he takes a deep breath also, it hurts.",
+      "bart": {
+        "summary": "Doctor: Hi, I'm the doctor that'll be treating you today. Patient: Hiya. Sounds good. Doctor: What's bringing you in? Patient: A big ol lump in my chest.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2,
+            "recall": 0.1053,
+            "f1": 0.1379
+          },
+          "rouge2": {
+            "precision": 0.0345,
+            "recall": 0.0179,
+            "f1": 0.0235
+          },
+          "rougeL": {
+            "precision": 0.1333,
+            "recall": 0.0702,
+            "f1": 0.092
+          }
+        }
+      },
+      "t5": {
+        "summary": "a big ol lump in my chest has been there for at least a year . it's gotten a lot more tender, and it hurts when I take deep breaths .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.6333,
+            "recall": 0.3333,
+            "f1": 0.4368
+          },
+          "rouge2": {
+            "precision": 0.1724,
+            "recall": 0.0893,
+            "f1": 0.1176
+          },
+          "rougeL": {
+            "precision": 0.4333,
+            "recall": 0.2281,
+            "f1": 0.2989
+          }
+        }
+      }
+    },
+    {
+      "case_id": "110",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 2-1/2-year-old female with a history of known febrile seizures, who was placed on Keppra oral solution at 150 mg b.i.d. to help prevent febrile seizures.  Although this has been a very successful treatment in terms of her febrile seizure control, she is now having occasional brief periods of pauses and staring, where she becomes unresponsive, but does not lose her postural tone.  The typical spell according to dad last anywhere from 10 to 15 seconds, mom says 3 to 4 minutes, which likely means probably somewhere in the 30- to 40-second period of time.  Mom did note that an episode had happened outside of a store recently, was associated with some perioral cyanosis, but there has never been a convulsive activity noted.  There have been no recent changes in her Keppra dosing and she is currently only at 20 mg/kg per day, which is overall a low dose for her.",
+      "bart": {
+        "summary": "Baby girl has a history of seizures. She used to have shakes and lose consciousness. She was placed on Keppra solution one hundred and fifty M G for two times a day. It helped a lot and she was doing fine. Her seizures were improving a lot but recently we have noticed something similar.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5741,
+            "recall": 0.1914,
+            "f1": 0.287
+          },
+          "rouge2": {
+            "precision": 0.1132,
+            "recall": 0.0373,
+            "f1": 0.0561
+          },
+          "rougeL": {
+            "precision": 0.3148,
+            "recall": 0.1049,
+            "f1": 0.1574
+          }
+        }
+      },
+      "t5": {
+        "summary": "guest_family2: she has a history of seizures. she used to have shakes and lose consciousness . she was placed on Keppra solution one hundred and fifty M G for two times a day . guest_family2: she will just stop doing everything and stare blank .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5227,
+            "recall": 0.142,
+            "f1": 0.2233
+          },
+          "rouge2": {
+            "precision": 0.1395,
+            "recall": 0.0373,
+            "f1": 0.0588
+          },
+          "rougeL": {
+            "precision": 0.2955,
+            "recall": 0.0802,
+            "f1": 0.1262
+          }
+        }
+      }
+    },
+    {
+      "case_id": "116",
+      "title": "GENHX",
+      "reference_summary": "The patient has had no help with the headaches from over-the-counter analgesics.",
+      "bart": {
+        "summary": "Doctor: Have you ever taken any prescribed drug for your headaches. Patient: No. Doctor: So only over the counter medications? Do they work in providing you relief? Patient: Yes.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2069,
+            "recall": 0.4286,
+            "f1": 0.2791
+          },
+          "rouge2": {
+            "precision": 0.0714,
+            "recall": 0.1538,
+            "f1": 0.0976
+          },
+          "rougeL": {
+            "precision": 0.1724,
+            "recall": 0.3571,
+            "f1": 0.2326
+          }
+        }
+      },
+      "t5": {
+        "summary": "excedrin or ibuprofen help when headaches get really bad . over the counter medications have been no help with my headaches .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.35,
+            "recall": 0.5,
+            "f1": 0.4118
+          },
+          "rouge2": {
+            "precision": 0.2105,
+            "recall": 0.3077,
+            "f1": 0.25
+          },
+          "rougeL": {
+            "precision": 0.25,
+            "recall": 0.3571,
+            "f1": 0.2941
+          }
+        }
+      }
+    },
+    {
+      "case_id": "120",
+      "title": "GENHX",
+      "reference_summary": "This patient presents to the office today because of some problems with her right hand.  It has been going tingling and getting numb periodically over several weeks.  She just recently moved her keyboard down at work.  She is hoping that will help.  She is worried about carpal tunnel.  She does a lot of repetitive type activities.  It is worse at night.  If she sleeps on it a certain way, she will wake up and it will be tingling then she can usually shake out the tingling, but nonetheless it is very bothersome for her.  It involves mostly the middle finger, although, she says it also involves the first and second digits on the right hand.  She has some pain in her thumb as well.  She thinks that could be arthritis.",
+      "bart": {
+        "summary": "Patient: Sometimes I feel like a lot of pins and needles are hurting my hand. Patient: It is mostly in my middle finger, but sometimes I also get this on the first or the second finger of my right hand. Doctor: I don't think it is arthritis, but we can get a test done to confirm it.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5517,
+            "recall": 0.2462,
+            "f1": 0.3404
+          },
+          "rouge2": {
+            "precision": 0.1404,
+            "recall": 0.062,
+            "f1": 0.086
+          },
+          "rougeL": {
+            "precision": 0.3103,
+            "recall": 0.1385,
+            "f1": 0.1915
+          }
+        }
+      },
+      "t5": {
+        "summary": "a lot of pins and needles are hurting your hand while other times it is totally numb . doctor: \"i was just worried if i had carpal tunnel\" patient: \"it is bad at night, how i sleep\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5278,
+            "recall": 0.1462,
+            "f1": 0.2289
+          },
+          "rouge2": {
+            "precision": 0.1714,
+            "recall": 0.0465,
+            "f1": 0.0732
+          },
+          "rougeL": {
+            "precision": 0.3611,
+            "recall": 0.1,
+            "f1": 0.1566
+          }
+        }
+      }
+    },
+    {
+      "case_id": "126",
+      "title": "GENHX",
+      "reference_summary": "This is a 46-year-old female with a history of events concerning for seizures.  The patient has a history of epilepsy and has also had non-epileptic events in the past.  Video EEG monitoring is performed to assess whether it is epileptic seizures or non-epileptic events.",
+      "bart": {
+        "summary": "Patient: I am concerned that I have been having small seizures again. Patient: I have felt these feelings before after having seizures in the past. By doing the video E E G we will have more information on whether you are having epileptic seizures or non-epileptic events.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3125,
+            "recall": 0.3125,
+            "f1": 0.3125
+          },
+          "rouge2": {
+            "precision": 0.1489,
+            "recall": 0.1489,
+            "f1": 0.1489
+          },
+          "rougeL": {
+            "precision": 0.2917,
+            "recall": 0.2917,
+            "f1": 0.2917
+          }
+        }
+      },
+      "t5": {
+        "summary": "patient: I have been waking up with strange body aches and feeling confused . doctor: I live alone now so I don't know if I had a seizure or not . patient: i am forty six. i work alone in my office most of the day .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2222,
+            "recall": 0.2083,
+            "f1": 0.2151
+          },
+          "rouge2": {
+            "precision": 0.0227,
+            "recall": 0.0213,
+            "f1": 0.022
+          },
+          "rougeL": {
+            "precision": 0.1333,
+            "recall": 0.125,
+            "f1": 0.129
+          }
+        }
+      }
+    },
+    {
+      "case_id": "127",
+      "title": "GENHX",
+      "reference_summary": "The patient has NG tube in place for decompression.  She says she is feeling a bit better.",
+      "bart": {
+        "summary": "Doctor: We have placed this nasogastric tube for decompression. Guest_family: Okay. Doctor: How are you feeling",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2941,
+            "recall": 0.2941,
+            "f1": 0.2941
+          },
+          "rouge2": {
+            "precision": 0.0625,
+            "recall": 0.0625,
+            "f1": 0.0625
+          },
+          "rougeL": {
+            "precision": 0.2353,
+            "recall": 0.2353,
+            "f1": 0.2353
+          }
+        }
+      },
+      "t5": {
+        "summary": "nasogastric tube placed for decompression . patient says she feels better now .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.8182,
+            "recall": 0.5294,
+            "f1": 0.6429
+          },
+          "rouge2": {
+            "precision": 0.3,
+            "recall": 0.1875,
+            "f1": 0.2308
+          },
+          "rougeL": {
+            "precision": 0.7273,
+            "recall": 0.4706,
+            "f1": 0.5714
+          }
+        }
+      }
+    },
+    {
+      "case_id": "128",
+      "title": "GENHX",
+      "reference_summary": "This is a 78-year-old male who has prostate cancer with metastatic disease to his bladder and in several locations throughout the skeletal system including the spine and shoulder.  The patient has had problems with hematuria in the past, but the patient noted that this episode began yesterday, and today he has been passing principally blood with very little urine.  The patient states that there is no change in his chronic lower back pain and denies any incontinence of urine or stool.  The patient has not had any fever.  There is no abdominal pain and the patient is still able to pass urine.  The patient has not had any melena or hematochezia.  There is no nausea or vomiting.  The patient has already completed chemotherapy and is beyond treatment for his cancer at this time.  The patient is receiving radiation therapy, but it is targeted to the bones and intended to give symptomatic relief of his skeletal pain and not intended to treat and cure the cancer.  The patient is not enlisted in hospice, but the principle around the patient's current treatment management is focusing on comfort care measures.",
+      "bart": {
+        "summary": "Doctor: We are following up with you for your prostate cancer which has metastasized to your bladder and in several locations throughout your body. Patient: Yes, you remember I had blood in my urine in the past, but I think it is coming back. I started noticing that from yesterday, and today I saw a lot of blood with very little urine.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5484,
+            "recall": 0.1789,
+            "f1": 0.2698
+          },
+          "rouge2": {
+            "precision": 0.2623,
+            "recall": 0.0847,
+            "f1": 0.128
+          },
+          "rougeL": {
+            "precision": 0.3871,
+            "recall": 0.1263,
+            "f1": 0.1905
+          }
+        }
+      },
+      "t5": {
+        "summary": "prostate cancer has metastasized to your bladder and in several locations throughout your body . doctor: \"i saw a lot of blood with very little urine\" patient: \"i am passing everything well. No blood in stools\" doctor: \"i haven't looked at hospice care facilities yet\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5556,
+            "recall": 0.1316,
+            "f1": 0.2128
+          },
+          "rouge2": {
+            "precision": 0.2273,
+            "recall": 0.0529,
+            "f1": 0.0858
+          },
+          "rougeL": {
+            "precision": 0.4667,
+            "recall": 0.1105,
+            "f1": 0.1787
+          }
+        }
+      }
+    },
+    {
+      "case_id": "135",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 26-year-old African-American male who states that he was stepping off a hilo at work when he felt a sudden pop in the posterior aspect of his left leg.  The patient was placed in posterior splint and followed up at ABC orthopedics for further care.",
+      "bart": {
+        "summary": "\"I stepped off a hilo at work, and I felt this pop in my left leg,\" patient says. \"I got put in a splint, and they recommended I follow up with you at ABC orthopedics,\" patient adds.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5946,
+            "recall": 0.4314,
+            "f1": 0.5
+          },
+          "rouge2": {
+            "precision": 0.3056,
+            "recall": 0.22,
+            "f1": 0.2558
+          },
+          "rougeL": {
+            "precision": 0.5405,
+            "recall": 0.3922,
+            "f1": 0.4545
+          }
+        }
+      },
+      "t5": {
+        "summary": "patient: \"i stepped off a hilo at work, and I felt this pop in my left leg\" patient: \"i got put in a splint, and they recommended I follow up with you at ABC orthopedics\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.6286,
+            "recall": 0.4314,
+            "f1": 0.5116
+          },
+          "rouge2": {
+            "precision": 0.3235,
+            "recall": 0.22,
+            "f1": 0.2619
+          },
+          "rougeL": {
+            "precision": 0.6,
+            "recall": 0.4118,
+            "f1": 0.4884
+          }
+        }
+      }
+    },
+    {
+      "case_id": "136",
+      "title": "GENHX",
+      "reference_summary": "School reports continuing difficulties with repetitive questioning, obsession with cleanness on a daily basis, concerned about his inability to relate this well in the classroom.  He appears confused and depressed at times.  Mother also indicates that preservative questioning had come down, but he started collecting old little toys that he did in the past.  He will attend social skills program in the summer.  ABCD indicated to me that they have identified two psychologists to refer him to for functional behavioral analysis.  There is lessening of tremoring in both hands since discontinuation of Zoloft.  He is now currently taking Abilify at 7.5 mg.",
+      "bart": {
+        "summary": "Family member: \"He's having a lot of problems at school. He has been asking an unusual number of questions, and he's been obsessed with cleaning and cleanness\" \"He seems to be confused and depressed sometimes. He used to collect old little toys when he was younger\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5,
+            "recall": 0.233,
+            "f1": 0.3179
+          },
+          "rouge2": {
+            "precision": 0.1489,
+            "recall": 0.0686,
+            "f1": 0.094
+          },
+          "rougeL": {
+            "precision": 0.3125,
+            "recall": 0.1456,
+            "f1": 0.1987
+          }
+        }
+      },
+      "t5": {
+        "summary": "guest_family: he's been asking an unusual number of questions . he's also been obsessed with cleaning and cleanness . guest_family: he'll be in a social skills program this summer .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5312,
+            "recall": 0.165,
+            "f1": 0.2519
+          },
+          "rouge2": {
+            "precision": 0.129,
+            "recall": 0.0392,
+            "f1": 0.0602
+          },
+          "rougeL": {
+            "precision": 0.3438,
+            "recall": 0.1068,
+            "f1": 0.163
+          }
+        }
+      }
+    },
+    {
+      "case_id": "139",
+      "title": "GENHX",
+      "reference_summary": "This 1+ year, black female, new patient in dermatology, sent in for consult from ABC Practice for initial evaluation of a lifelong history of atopic eczema.  The patient's mom is from Tanzania.  The patient has been treated with Elidel cream b.i.d. for six months but apparently this has stopped working now and it seems to make her more dry and plus she has been using some Johnson's Baby Oil on her.  The patient is a well-developed baby.  Appears stated age.  Overall health is good.",
+      "bart": {
+        "summary": "Mother and her daughter bring their baby daughter to a dermatology office. The mother says she has been seeing an odd skin issue with her baby. She says she's been putting an Elidel cream on her daughter's rashes twice a day for six months. The cream was effective, but now it doesn't work.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5,
+            "recall": 0.3146,
+            "f1": 0.3862
+          },
+          "rouge2": {
+            "precision": 0.1091,
+            "recall": 0.0682,
+            "f1": 0.0839
+          },
+          "rougeL": {
+            "precision": 0.2321,
+            "recall": 0.1461,
+            "f1": 0.1793
+          }
+        }
+      },
+      "t5": {
+        "summary": "guest_family: my daughter is a little over one years old, and we identify as black . she has a history of this atopic eczema, correct? guest_family: it looks like they gave you an Elidel cream .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4444,
+            "recall": 0.1798,
+            "f1": 0.256
+          },
+          "rouge2": {
+            "precision": 0.1429,
+            "recall": 0.0568,
+            "f1": 0.0813
+          },
+          "rougeL": {
+            "precision": 0.25,
+            "recall": 0.1011,
+            "f1": 0.144
+          }
+        }
+      }
+    },
+    {
+      "case_id": "146",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 5-year, 5-month-old male who sustained a both-bone forearm fracture in September 2007.  The fracture healed uneventfully, but then the patient subsequently suffered a refracture one month ago.  The patient had shortening in arms, noted in both bones.  The parents opted for surgical stabilization with nailing.  This was performed one month ago on return visit.  His ulnar nail was quite prominent underneath the skin.  It was decided to remove the ulnar nail early and place the patient in another cast for 3 weeks. Risks and benefits of the surgery were discussed with the mother.  Risk of surgery incudes risks of anesthesia, infection, bleeding, changes in sensation in most of the extremity, need for longer casting.  All questions were answered and mother agreed to above plan.",
+      "bart": {
+        "summary": "The risk of infection is overall very low, honestly its less than one percent. Other risks include bleeding, changes in sensation in most of the extremity, or need for longer casting. I would not worry too much about these risks. I have not seen anything bad happen before.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4375,
+            "recall": 0.1591,
+            "f1": 0.2333
+          },
+          "rouge2": {
+            "precision": 0.2553,
+            "recall": 0.0916,
+            "f1": 0.1348
+          },
+          "rougeL": {
+            "precision": 0.3542,
+            "recall": 0.1288,
+            "f1": 0.1889
+          }
+        }
+      },
+      "t5": {
+        "summary": "he broke both the bones in his forearm in September of two thousand seven . he also rebroke it about a month ago . doctor: the risk of infection is overall very low . other risks include bleeding, changes in sensation in most of the extremity .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.6512,
+            "recall": 0.2121,
+            "f1": 0.32
+          },
+          "rouge2": {
+            "precision": 0.2619,
+            "recall": 0.084,
+            "f1": 0.1272
+          },
+          "rougeL": {
+            "precision": 0.4884,
+            "recall": 0.1591,
+            "f1": 0.24
+          }
+        }
+      }
+    },
+    {
+      "case_id": "148",
+      "title": "GENHX",
+      "reference_summary": "A 2-week-old who at this point has otherwise been doing well.  He has a relatively unremarkable foreskin.  At this point in time, he otherwise seems to be doing reasonably well.  The question is about the foreskin.  He otherwise has no other significant issues.  Severity low, ongoing since birth two weeks.  Thank you for allowing me to see this patient in consultation.",
+      "bart": {
+        "summary": "Doctor: How is your two week old newborn son doing today? Guest_family: He's been doing very well. Doctor: Great, what brings you in for a visit today?",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4483,
+            "recall": 0.2063,
+            "f1": 0.2826
+          },
+          "rouge2": {
+            "precision": 0.1071,
+            "recall": 0.0484,
+            "f1": 0.0667
+          },
+          "rougeL": {
+            "precision": 0.2759,
+            "recall": 0.127,
+            "f1": 0.1739
+          }
+        }
+      },
+      "t5": {
+        "summary": "guest_family: he's been doing pretty well . foreskin appears to not be out of the ordinary upon exam . guest_family: he's doing pretty well .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4231,
+            "recall": 0.1746,
+            "f1": 0.2472
+          },
+          "rouge2": {
+            "precision": 0.04,
+            "recall": 0.0161,
+            "f1": 0.023
+          },
+          "rougeL": {
+            "precision": 0.3077,
+            "recall": 0.127,
+            "f1": 0.1798
+          }
+        }
+      }
+    },
+    {
+      "case_id": "150",
+      "title": "GENHX",
+      "reference_summary": "This is an 18-month-old white male here with his mother for complaint of intermittent fever for the past five days.  Mother states he just completed Amoxil several days ago for a sinus infection.  Patient does have a past history compatible with allergic rhinitis and he has been taking Zyrtec serum.  Mother states that his temperature usually elevates at night.  Two days his temperature was 102.6.  Mother has not taken it since, and in fact she states today he seems much better.  He is cutting an eye tooth that causes him to be drooling and sometimes fussy.  He has had no vomiting or diarrhea.  There has been no coughing.  Nose secretions are usually discolored in the morning, but clear throughout the rest of the day.  Appetite is fine.",
+      "bart": {
+        "summary": "Doctor: My baby is sick. Guest_family: Don't worry, I will help you. He has had a fever for five days. Doctor: How old is he? Guest_ family: Just eighteen months. He is a Swedish American.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4595,
+            "recall": 0.1308,
+            "f1": 0.2036
+          },
+          "rouge2": {
+            "precision": 0.1389,
+            "recall": 0.0388,
+            "f1": 0.0606
+          },
+          "rougeL": {
+            "precision": 0.2432,
+            "recall": 0.0692,
+            "f1": 0.1078
+          }
+        }
+      },
+      "t5": {
+        "summary": "guest_family: just eighteen months. he is a Swedish american . guest_family: he finished amoxil several days ago for sinus infection . guest_family: it is higher at night. he is better .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.6452,
+            "recall": 0.1538,
+            "f1": 0.2484
+          },
+          "rouge2": {
+            "precision": 0.2333,
+            "recall": 0.0543,
+            "f1": 0.0881
+          },
+          "rougeL": {
+            "precision": 0.4194,
+            "recall": 0.1,
+            "f1": 0.1615
+          }
+        }
+      }
+    },
+    {
+      "case_id": "152",
+      "title": "GENHX",
+      "reference_summary": "XYZ was seen by Dr. ABC for an FCR tendinitis.  We do not have his reports, but by history she has had two cortisone shots.  She plays musical instruments, and it does bother her from time to time.  She was considering surgery, but she takes ibuprofen and it seems to be well-controlled.  She is here now for consultation.",
+      "bart": {
+        "summary": "Doctor: So, I hear from my nurses you have F C R tendinitis. Have you seen another doctor for this? Patient: Yes, I saw Doctor A B C. Doctor: That stands for flexor carpi radialis, it's a tendon in your forearm.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.1667,
+            "recall": 0.1186,
+            "f1": 0.1386
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.0714,
+            "recall": 0.0508,
+            "f1": 0.0594
+          }
+        }
+      },
+      "t5": {
+        "summary": "flexor carpi radialis is a tendon in your forearm that has become inflamed . patient: i've had two cortisone shots . doctor: i play a few instruments .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3077,
+            "recall": 0.1356,
+            "f1": 0.1882
+          },
+          "rouge2": {
+            "precision": 0.12,
+            "recall": 0.0517,
+            "f1": 0.0723
+          },
+          "rougeL": {
+            "precision": 0.2692,
+            "recall": 0.1186,
+            "f1": 0.1647
+          }
+        }
+      }
+    },
+    {
+      "case_id": "155",
+      "title": "GENHX",
+      "reference_summary": "This 47-year-old white female presents with concern about possible spider bite to the left side of her neck.  She is not aware of any specific injury.  She noticed a little tenderness and redness on her left posterior shoulder about two days ago.  It seems to be getting a little bit larger in size, and she saw some red streaks extending up her neck.  She has had no fever.  The area is very minimally tender, but not particularly so.",
+      "bart": {
+        "summary": "Doctor: Hello, miss how can I help today? Do you mind stating your age and ethnicity for documentation purposes? Patient: I am a white forty seven year old female. I am concerned about a spider bite on the back left side of my shoulder. I don't remember how it happened.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3529,
+            "recall": 0.225,
+            "f1": 0.2748
+          },
+          "rouge2": {
+            "precision": 0.1,
+            "recall": 0.0633,
+            "f1": 0.0775
+          },
+          "rougeL": {
+            "precision": 0.2549,
+            "recall": 0.1625,
+            "f1": 0.1985
+          }
+        }
+      },
+      "t5": {
+        "summary": "i noticed a bump near my shoulder two days ago. it is tender and red. I think it is getting bigger. i want to know what the red streaks going up my neck are.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5588,
+            "recall": 0.2375,
+            "f1": 0.3333
+          },
+          "rouge2": {
+            "precision": 0.2121,
+            "recall": 0.0886,
+            "f1": 0.125
+          },
+          "rougeL": {
+            "precision": 0.3529,
+            "recall": 0.15,
+            "f1": 0.2105
+          }
+        }
+      }
+    },
+    {
+      "case_id": "159",
+      "title": "GENHX",
+      "reference_summary": "This 51-year-old male presents to ABCD General Hospital. The patient states that he has had degenerative joint disease in his left first MPJ for many years that has been progressively getting worse and more painful over time.  The patient desires surgical treatment.",
+      "bart": {
+        "summary": "Doctor: How old are you, sir? Patient: I'm fifty one years old, doctor. Doctor: Yes, looking at these x rays, the arthritis is in your M P J of the big toe.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.1818,
+            "recall": 0.1364,
+            "f1": 0.1558
+          },
+          "rouge2": {
+            "precision": 0.0312,
+            "recall": 0.0233,
+            "f1": 0.0267
+          },
+          "rougeL": {
+            "precision": 0.1515,
+            "recall": 0.1136,
+            "f1": 0.1299
+          }
+        }
+      },
+      "t5": {
+        "summary": "degenerative joint disease of the big toe is causing pain in the big toe . patient: \"i can't take it anymore, I want that surgery done.\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3462,
+            "recall": 0.2045,
+            "f1": 0.2571
+          },
+          "rouge2": {
+            "precision": 0.08,
+            "recall": 0.0465,
+            "f1": 0.0588
+          },
+          "rougeL": {
+            "precision": 0.2308,
+            "recall": 0.1364,
+            "f1": 0.1714
+          }
+        }
+      }
+    },
+    {
+      "case_id": "162",
+      "title": "GENHX",
+      "reference_summary": "This 57-year-old female who presented today for evaluation and recommendations regarding facial rhytids.  In summary, the patient is a healthy 57-year-old female, nonsmoker with no history of skin disease, who has predominant fullness in the submandibular region and mid face region and prominent nasolabial folds.",
+      "bart": {
+        "summary": "Doctor: Hello, miss. How are you doing today? Patient: I have so many wrinkles on my face. I'm fifty seven right now, but I want to look younger. Can you help me? Doctor: Of course! Before I talk about any procedures with you, I have to ask a few questions",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.1176,
+            "recall": 0.1224,
+            "f1": 0.12
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.0588,
+            "recall": 0.0612,
+            "f1": 0.06
+          }
+        }
+      },
+      "t5": {
+        "summary": "nasolabial folds are prominent . submandibular region and mid-face region predominantly full . nasolabial folds are prominent .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.625,
+            "recall": 0.2041,
+            "f1": 0.3077
+          },
+          "rouge2": {
+            "precision": 0.4,
+            "recall": 0.125,
+            "f1": 0.1905
+          },
+          "rougeL": {
+            "precision": 0.5,
+            "recall": 0.1633,
+            "f1": 0.2462
+          }
+        }
+      }
+    },
+    {
+      "case_id": "163",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 38-year-old woman presenting to our clinic for the first time for evaluation of hip pain, right greater than left, of greater than 2 years duration.  The patient states that she began with right hip pain getting steadily worse over the last 2 years and has now developed some pain in the left hip.  The pain is located laterally as well as anteriorly into the groin.  She states that the pain is present during activities such as walking, and she does get some painful popping and clicking in the right hip.  She is here for evaluation for the first time.  She sought no previous medical attention for this.",
+      "bart": {
+        "summary": "Patient: I have pain in my hips, but my right hurts more than my left. Patient: It's been about two years now on the right, and it just started in the left recently.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4706,
+            "recall": 0.1416,
+            "f1": 0.2177
+          },
+          "rouge2": {
+            "precision": 0.1212,
+            "recall": 0.0357,
+            "f1": 0.0552
+          },
+          "rougeL": {
+            "precision": 0.3529,
+            "recall": 0.1062,
+            "f1": 0.1633
+          }
+        }
+      },
+      "t5": {
+        "summary": "i have pain in my hips, but my right hurts more than my left . doctor: \"it's been about two years now on the right, and it just started in the left recently\" patient: \"walking is so painful for me now. I hear this popping and clicking now too\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4694,
+            "recall": 0.2035,
+            "f1": 0.284
+          },
+          "rouge2": {
+            "precision": 0.125,
+            "recall": 0.0536,
+            "f1": 0.075
+          },
+          "rougeL": {
+            "precision": 0.3265,
+            "recall": 0.1416,
+            "f1": 0.1975
+          }
+        }
+      }
+    },
+    {
+      "case_id": "164",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 53-year-old female with a history of right thoracic rib pain related to a herniated nucleus pulposus at T8-T9.  She has failed conservative measures and sought operative intervention for relief of her symptoms.",
+      "bart": {
+        "summary": "Doctor: How old are you, ma'am, twenty? Patient: You flatter me doctor, I'm fifty three. Doctor: I see here that you have a herniated disc at T eight T nine, does that",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.1471,
+            "recall": 0.1282,
+            "f1": 0.137
+          },
+          "rouge2": {
+            "precision": 0.0303,
+            "recall": 0.0263,
+            "f1": 0.0282
+          },
+          "rougeL": {
+            "precision": 0.1176,
+            "recall": 0.1026,
+            "f1": 0.1096
+          }
+        }
+      },
+      "t5": {
+        "summary": "i have a herniated disc at T eight T nine, does that sound familiar? patient: i've taken antiinflammatories, and rested.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2381,
+            "recall": 0.1282,
+            "f1": 0.1667
+          },
+          "rouge2": {
+            "precision": 0.05,
+            "recall": 0.0263,
+            "f1": 0.0345
+          },
+          "rougeL": {
+            "precision": 0.1905,
+            "recall": 0.1026,
+            "f1": 0.1333
+          }
+        }
+      }
+    },
+    {
+      "case_id": "166",
+      "title": "GENHX",
+      "reference_summary": "This 58 y/o RHF was in her usual healthy state, until 4:00PM, 1/8/93, when she suddenly became blind. Tongue numbness and slurred speech occurred simultaneously with the loss of vision. The vision transiently improved to \"severe blurring\" enroute to a local ER, but worsened again once there. While being evaluated she became unresponsive, even to deep noxious stimuli. She was transferred to UIHC for further evaluation. Upon arrival at UIHC her signs and symptoms were present but markedly improved.",
+      "bart": {
+        "summary": "The patient complained of tongue numbness and slurred speech in conjunction with vision loss. While being evaluated, she became unresponsive. She was transferred to U I H C. Her symptoms improved markedly upon her arrival.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.8,
+            "recall": 0.3373,
+            "f1": 0.4746
+          },
+          "rouge2": {
+            "precision": 0.3529,
+            "recall": 0.1463,
+            "f1": 0.2069
+          },
+          "rougeL": {
+            "precision": 0.5714,
+            "recall": 0.241,
+            "f1": 0.339
+          }
+        }
+      },
+      "t5": {
+        "summary": "fifty eight year old female suddenly became blind . she complained of tongue numbness and slurred speech in conjunction with vision loss . while being evaluated, she became unresponsive and wasn't responding to stimuli .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.697,
+            "recall": 0.2771,
+            "f1": 0.3966
+          },
+          "rouge2": {
+            "precision": 0.3438,
+            "recall": 0.1341,
+            "f1": 0.193
+          },
+          "rougeL": {
+            "precision": 0.5455,
+            "recall": 0.2169,
+            "f1": 0.3103
+          }
+        }
+      }
+    },
+    {
+      "case_id": "168",
+      "title": "GENHX",
+      "reference_summary": "The patient presents today for followup, recently noted for E. coli urinary tract infection.  She was treated with Macrobid for 7 days, and only took one nighttime prophylaxis.  She discontinued this medication to due to skin rash as well as hives.  Since then, this had resolved.  Does not have any dysuria, gross hematuria, fever, chills.  Daytime frequency every two to three hours, nocturia times one, no incontinence, improving stress urinary incontinence after Prometheus pelvic rehabilitation. Renal ultrasound, August 5, 2008, reviewed, no evidence of hydronephrosis, bladder mass or stone.  Discussed. Previous urine cultures have shown E. coli, November 2007, May 7, 2008 and July 7, 2008.",
+      "bart": {
+        "summary": "Doctor: Has your E coli improved since your last visit, ma'am? Patient: Yes, but I had some complications with the medicine. Doctor: Do you have any pain with urination or blood in your urine? patient: No, nothing to report there.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3415,
+            "recall": 0.1321,
+            "f1": 0.1905
+          },
+          "rouge2": {
+            "precision": 0.05,
+            "recall": 0.019,
+            "f1": 0.0276
+          },
+          "rougeL": {
+            "precision": 0.1951,
+            "recall": 0.0755,
+            "f1": 0.1088
+          }
+        }
+      },
+      "t5": {
+        "summary": "urinates about every two or three hours, then maybe once at night . patient: \"i had a skin rash and hives, so I discontinued the medicine\" patient: \"it's getting better under stress too, with the pelvic exercises and rehab\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4872,
+            "recall": 0.1792,
+            "f1": 0.2621
+          },
+          "rouge2": {
+            "precision": 0.0789,
+            "recall": 0.0286,
+            "f1": 0.042
+          },
+          "rougeL": {
+            "precision": 0.1795,
+            "recall": 0.066,
+            "f1": 0.0966
+          }
+        }
+      }
+    },
+    {
+      "case_id": "170",
+      "title": "GENHX",
+      "reference_summary": "This 37y/o LHM was seen one month prior to this presentation for HA, nausea and vomiting. Gastrointestinal evaluation at that time showed no evidence of bowel obstruction and he was released home. These symptoms had been recurrent since onset. At presentation he complained of mild blurred vision (OU), difficulty concentrating and HA which worsened upon sitting up. The headaches were especially noticeable in the early morning. He described them as non-throbbing headaches. They begin in the bifrontal region and radiate posteriorly. They occurred up to 6 times/day. The HA improved with lying down or dropping the head down between the knees towards the floor. The headaches were associated with blurred vision, nausea,vomiting, photophobia, and phonophobia. He denied any scotomata or positive visual phenomena. He denies any weakness, numbness, tingling, dysarthria or diplopia. His weight has fluctuated from 163# to 148# over the past 3 months and at present he weighs 154#. His appetite has been especially poor in the past month.",
+      "bart": {
+        "summary": "A left-handed male, 37, visited a doctor for headaches, nausea, and vomiting. His exams showed no evidence of bowel obstruction and he was released home. After his discharge, he had the same symptoms on and off after that. He is seeing things blurred and having difficulty concentrating.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.6042,
+            "recall": 0.1758,
+            "f1": 0.2723
+          },
+          "rouge2": {
+            "precision": 0.2766,
+            "recall": 0.0793,
+            "f1": 0.1232
+          },
+          "rougeL": {
+            "precision": 0.4167,
+            "recall": 0.1212,
+            "f1": 0.1878
+          }
+        }
+      },
+      "t5": {
+        "summary": "thirty-seven-year-old, left-handed male, visited us a month ago for headaches, nausea, and vomiting . patient: \"my headaches are dull, constant, and it feels like my head is wrapped in a tight band\" he denies any blind spots, positive visual phenomena, weakness, numbness, tingling or double vision .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4286,
+            "recall": 0.1273,
+            "f1": 0.1963
+          },
+          "rouge2": {
+            "precision": 0.1667,
+            "recall": 0.0488,
+            "f1": 0.0755
+          },
+          "rougeL": {
+            "precision": 0.3673,
+            "recall": 0.1091,
+            "f1": 0.1682
+          }
+        }
+      }
+    },
+    {
+      "case_id": "177",
+      "title": "GENHX",
+      "reference_summary": "This is a 55-year-old female with a history of stroke, who presents today for followup of frequency and urgency with urge incontinence.  This has been progressively worsening, and previously on VESIcare with no improvement.  She continues to take Enablex 50 mg and has not noted any improvement of her symptoms.  The nursing home did not do a voiding diary.  She is accompanied by her power of attorney.  No dysuria, gross hematuria, fever or chills.  No bowel issues and does use several Depends a day. Recent urodynamics in April 2008, here in the office, revealed significant detrusor instability with involuntary urinary incontinence and low bladder volumes, and cystoscopy was unremarkable.",
+      "bart": {
+        "summary": "Doctor: Do you have any major medical conditions that I should know about, ma'am? Patient: Well, I'm fifty five, and I've had a stroke. Doctor: Okay, thank you. So, what brings you in for a visit today? patient: I have the urge to use the bathroom all the time.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2692,
+            "recall": 0.1261,
+            "f1": 0.1718
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.1346,
+            "recall": 0.0631,
+            "f1": 0.0859
+          }
+        }
+      },
+      "t5": {
+        "summary": "patient: i have the urge to use the bathroom all the time . patient: i've had VESIcare, but it hasn't improved yet . patient: i go through several pairs of Depends a day .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3636,
+            "recall": 0.1081,
+            "f1": 0.1667
+          },
+          "rouge2": {
+            "precision": 0.0625,
+            "recall": 0.0182,
+            "f1": 0.0282
+          },
+          "rougeL": {
+            "precision": 0.2121,
+            "recall": 0.0631,
+            "f1": 0.0972
+          }
+        }
+      }
+    },
+    {
+      "case_id": "179",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 41-year-old white male with a history of HIV disease.  His last CD4 count was 425, viral load was less than 50 in 08/07.  He was recently hospitalized for left gluteal abscess, for which he underwent I&D and he has newly diagnosed diabetes mellitus.  He also has a history of hypertension and hypertriglyceridemia.  He had been having increased urination and thirst.  He was seen in the hospital by the endocrinology staff and treated with insulin while hospitalized and getting treatment for his perirectal abscess.  The endocrine team apparently felt that insulin might be best for this patient, but because of financial issues, elected to place him on Glucophage and glyburide.  The patient reports that he has been taking the medication.  He is in general feeling better.  He says that his gluteal abscess is improving and he will be following up with Surgery today.",
+      "bart": {
+        "summary": "Doctor: Good afternoon, sir, did you just have your forty first birthday? Patient: Yes, I just had it. Doctor: Happy birthday! Just to confirm my charts, you identify as White, correct? Patient; Yes, doctor. That's correct. We've treated you for H I V in the past. I have your lab results from your last visit right here. Patient: Can you tell me those numbers again, doctor?",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2059,
+            "recall": 0.0933,
+            "f1": 0.1284
+          },
+          "rouge2": {
+            "precision": 0.0149,
+            "recall": 0.0067,
+            "f1": 0.0093
+          },
+          "rougeL": {
+            "precision": 0.1029,
+            "recall": 0.0467,
+            "f1": 0.0642
+          }
+        }
+      },
+      "t5": {
+        "summary": "doctor: \"we've treated you for H I V in the past\" patient: \"i had an abscess in my left glute, so I had a surgery to remove and clean it out\" patient: \"i've been peeing a lot, and I've been really thirsty, too\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.413,
+            "recall": 0.1267,
+            "f1": 0.1939
+          },
+          "rouge2": {
+            "precision": 0.0222,
+            "recall": 0.0067,
+            "f1": 0.0103
+          },
+          "rougeL": {
+            "precision": 0.2391,
+            "recall": 0.0733,
+            "f1": 0.1122
+          }
+        }
+      }
+    },
+    {
+      "case_id": "184",
+      "title": "GENHX",
+      "reference_summary": "He is married.  Nonsmoker.  Does not consume alcohol.  No history of recreational drug use.",
+      "bart": {
+        "summary": "Doctor: Are you married? Patient: Yes, I have been married for ten years. Doctor: Do you drink alcohol and if so",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.0952,
+            "recall": 0.1429,
+            "f1": 0.1143
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.0952,
+            "recall": 0.1429,
+            "f1": 0.1143
+          }
+        }
+      },
+      "t5": {
+        "summary": "doctor: I have been married for ten years . patient: i do not smoke or drink.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.1333,
+            "recall": 0.1429,
+            "f1": 0.1379
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.1333,
+            "recall": 0.1429,
+            "f1": 0.1379
+          }
+        }
+      }
+    },
+    {
+      "case_id": "186",
+      "title": "GENHX",
+      "reference_summary": "The patient is a 78-year-old female with the problem of essential hypertension.  She has symptoms that suggested intracranial pathology, but so far work-up has been negative. She is taking hydrochlorothiazide 25-mg once a day and K-Dur 10-mEq once a day with adequate control of her blood pressure.  She denies any chest pain, shortness of breath, PND, ankle swelling, or dizziness.",
+      "bart": {
+        "summary": "Doctor: Hello ma'am. How are you doing today? Can you state your age please? Patient: I was born in nineteen forty three and am seventy eight years young. I am doing well other than the hypertension issue. Doctor: Luckily, all of the intercranial lab work has come back negative.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2,
+            "recall": 0.1515,
+            "f1": 0.1724
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.14,
+            "recall": 0.1061,
+            "f1": 0.1207
+          }
+        }
+      },
+      "t5": {
+        "summary": "i was born in nineteen forty three and am seventy eight years young . all of the intercranial lab work has come back negative .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3043,
+            "recall": 0.1061,
+            "f1": 0.1573
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.2174,
+            "recall": 0.0758,
+            "f1": 0.1124
+          }
+        }
+      }
+    },
+    {
+      "case_id": "188",
+      "title": "GENHX",
+      "reference_summary": "This is a return visit to the renal clinic for the patient where she is followed up for diabetes and kidney disease management.  Her last visit to this clinic was approximately three months ago.  Since that time, the patient states that she has had some variability in her glucose control too largely to recent upper and lower respiratory illnesses.  She did not seek attention for these, and the symptoms have begun to subside on their own and in the meantime, she continues to have some difficulties with blood sugar management.  Her 14-day average is 191.  She had a high blood sugar this morning, which she attributed to a problem with her infusion set; however, in the clinic after an appropriate correction bolus, she subsequently became quite low.  She was treated appropriately with glucose and crackers, and her blood sugar came back up to over 100.  She was able to manage this completely on her own.  In the meantime, she is not having any other medical problems that have interfered with glucose control.  Her diet has been a little bit different in that she had been away visiting with her family for some period of time as well.",
+      "bart": {
+        "summary": "Doctor: Remind me, please, when was your last appointment, miss? Patient: It was about three months ago. Doctor: How have your diabetes and kidney disease progressed since? patient: Well, I've had a lot of variability in my glucose control too largely.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5714,
+            "recall": 0.1212,
+            "f1": 0.2
+          },
+          "rouge2": {
+            "precision": 0.2439,
+            "recall": 0.0508,
+            "f1": 0.084
+          },
+          "rougeL": {
+            "precision": 0.3333,
+            "recall": 0.0707,
+            "f1": 0.1167
+          }
+        }
+      },
+      "t5": {
+        "summary": "patient: \"my two week average is one hundred ninety one, and it was high this morning\" patient: \"i've had a lot of variability in my glucose control too largely\" patient: \"i've had a lot of variability in my glucose control too largely\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5227,
+            "recall": 0.1162,
+            "f1": 0.1901
+          },
+          "rouge2": {
+            "precision": 0.186,
+            "recall": 0.0406,
+            "f1": 0.0667
+          },
+          "rougeL": {
+            "precision": 0.3864,
+            "recall": 0.0859,
+            "f1": 0.1405
+          }
+        }
+      }
+    },
+    {
+      "case_id": "195",
+      "title": "GENHX",
+      "reference_summary": "Briefly, the patient is a very pleasant 72-year-old female with previous history of hypertension and also recent diagnosis of C. diff for which she was admitted here in 5/2009, who presents to the hospital on 6/18/2009 with abdominal pain, cramping, and persistent diarrhea.  After admission, she had a CT of the abdomen done, which showed evidence of diffuse colitis and she was started on IV Flagyl and also on IV Levaquin.  She was also placed on IV Reglan because of nausea and vomiting.  In spite of the above, her white count still continues to be elevated today.  On questioning the patient, she states the nausea and vomiting has resolved, but the diarrhea still present, but otherwise denies any other specific complaints except for some weakness.",
+      "bart": {
+        "summary": "Doctor: Hi there, I love that dress, very pretty! Patient: Thank you for complementing a seventy-two-year-old patient. Doctor: No, I mean it, seriously. Okay, so you were admitted here in May two thousand nine. You have a history of hypertension, and on June eighteenth two thousand 9 you had bad abdominal pain diarrhea and cramps.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3793,
+            "recall": 0.1692,
+            "f1": 0.234
+          },
+          "rouge2": {
+            "precision": 0.1228,
+            "recall": 0.0543,
+            "f1": 0.0753
+          },
+          "rougeL": {
+            "precision": 0.2241,
+            "recall": 0.1,
+            "f1": 0.1383
+          }
+        }
+      },
+      "t5": {
+        "summary": "doctor: \"i do not have any nausea or vomiting, but still have diarrhea\" patient: \"due to all that diarrhea I feel very weak\" doctor: \"it's a good thing they gave me IV antibiotics\" patient: \"they told me I might have C Diff\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3721,
+            "recall": 0.1231,
+            "f1": 0.185
+          },
+          "rouge2": {
+            "precision": 0.0238,
+            "recall": 0.0078,
+            "f1": 0.0117
+          },
+          "rougeL": {
+            "precision": 0.1395,
+            "recall": 0.0462,
+            "f1": 0.0694
+          }
+        }
+      }
+    },
+    {
+      "case_id": "197",
+      "title": "GENHX",
+      "reference_summary": "The patient is alert and oriented x3 and sitting up in bed.  The patient has been ambulating without difficulty.  The patient is still NPO.  The patient denies any new symptomatology from  6/10/2009.  The patient has complaints of incisional tenderness.  The patient was given a full explanation about her clinical condition and all her questions were answered.",
+      "bart": {
+        "summary": "Doctor: It's good to see you sitting up in the bed, ma'am. Patient: I've been walking around without any difficulty too. Doctor: Have you eaten anything yet? Patient: No, I've remained, , NPO, just like you told me.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2927,
+            "recall": 0.2069,
+            "f1": 0.2424
+          },
+          "rouge2": {
+            "precision": 0.05,
+            "recall": 0.0351,
+            "f1": 0.0412
+          },
+          "rougeL": {
+            "precision": 0.2439,
+            "recall": 0.1724,
+            "f1": 0.202
+          }
+        }
+      },
+      "t5": {
+        "summary": "doctor: i've been walking around without any difficulty too . patient: \"i do have tenderness where you made the cut for the surgery\" doctor: \"we are all down and you should be back to eating shortly\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2778,
+            "recall": 0.1724,
+            "f1": 0.2128
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.1944,
+            "recall": 0.1207,
+            "f1": 0.1489
+          }
+        }
+      }
+    }
+  ]
+}

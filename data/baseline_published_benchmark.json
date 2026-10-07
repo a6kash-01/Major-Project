@@ -1,0 +1,492 @@
+{
+  "num_test_cases": 10,
+  "overall_winner": "T5",
+  "models": {
+    "BART": {
+      "rouge1": {
+        "precision": 0.3031,
+        "recall": 0.2612,
+        "f1": 0.2783
+      },
+      "rouge2": {
+        "precision": 0.0872,
+        "recall": 0.0741,
+        "f1": 0.0795
+      },
+      "rougeL": {
+        "precision": 0.1996,
+        "recall": 0.1701,
+        "f1": 0.1822
+      }
+    },
+    "T5": {
+      "rouge1": {
+        "precision": 0.377,
+        "recall": 0.2189,
+        "f1": 0.2743
+      },
+      "rouge2": {
+        "precision": 0.1516,
+        "recall": 0.0845,
+        "f1": 0.1077
+      },
+      "rougeL": {
+        "precision": 0.265,
+        "recall": 0.1527,
+        "f1": 0.1921
+      }
+    }
+  },
+  "detailed_cases": [
+    {
+      "case_id": "CASE-001",
+      "title": "Acute Migraine Headache Consultation",
+      "reference_summary": "Patient Robert presented with a 3-day history of severe left-sided throbbing headache accompanied by photophobia and nausea. Prior treatment with OTC ibuprofen 400 mg provided minimal relief. Vitals were normal (BP 120/80 mmHg, Temp 98.6 F). Diagnosed with acute migraine headache. Prescribed Sumatriptan 50 mg and Paracetamol 500 mg with instructions to rest in dark room and follow up in 1 week.",
+      "bart": {
+        "summary": "Doctor: Good morning, Mr. Robert. How can I help you today? Patient: I have been having severe throbbing headaches for the past 3 days. It gets worse with bright light and loud sounds. Doctor: I am diagnosing acute migraine headache. Sumatriptan 50 mg to take at the onset of severe pain, along with Paracetamol 500 mg for relief.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3966,
+            "recall": 0.3485,
+            "f1": 0.371
+          },
+          "rouge2": {
+            "precision": 0.1579,
+            "recall": 0.1385,
+            "f1": 0.1475
+          },
+          "rougeL": {
+            "precision": 0.2586,
+            "recall": 0.2273,
+            "f1": 0.2419
+          }
+        }
+      },
+      "t5": {
+        "summary": "i have severe throbbing headaches for the past 3 days, mostly on the left side of my head . patient: \"i feel nauseous, like i want to throw up whenever the headache peaks\" patient: \"i am prescribing Sumatriptan 50 mg to take at the onset of severe pain\"",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3404,
+            "recall": 0.2424,
+            "f1": 0.2832
+          },
+          "rouge2": {
+            "precision": 0.1522,
+            "recall": 0.1077,
+            "f1": 0.1261
+          },
+          "rougeL": {
+            "precision": 0.2128,
+            "recall": 0.1515,
+            "f1": 0.177
+          }
+        }
+      }
+    },
+    {
+      "case_id": "CASE-002",
+      "title": "Upper Respiratory Tract Infection",
+      "reference_summary": "Patient Sarah presented with a 5-day history of dry cough, sore throat, fatigue, and low-grade fever (100.4 F). Examination revealed inflamed pharynx with clear lung fields. Diagnosed with viral upper respiratory tract infection. Managed conservatively with rest, hydration, and Paracetamol 500 mg. Advised to return if fever exceeds 102 F or dyspnea develops.",
+      "bart": {
+        "summary": "Doctor: Hello Ms. Sarah. What brings you in today? Patient: Hi Doctor. I've had a dry cough, sore throat, and low fever for about 5 days. Doctor: Let me check your throat and lungs. Your throat looks inflamed, but your lungs are clear on auscultation. Temperature is 100. 4 F. Patient: Is it pneumonia Doctor? Doctor: No,",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3276,
+            "recall": 0.3393,
+            "f1": 0.3333
+          },
+          "rouge2": {
+            "precision": 0.1228,
+            "recall": 0.1273,
+            "f1": 0.125
+          },
+          "rougeL": {
+            "precision": 0.2069,
+            "recall": 0.2143,
+            "f1": 0.2105
+          }
+        }
+      },
+      "t5": {
+        "summary": "patient has dry cough, sore throat, low fever, and low fever for about 5 days . symptoms should resolve in 7 to 10 days. follow up if fever exceeds 102 F or if shortness of breath develops .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5278,
+            "recall": 0.3393,
+            "f1": 0.413
+          },
+          "rouge2": {
+            "precision": 0.2857,
+            "recall": 0.1818,
+            "f1": 0.2222
+          },
+          "rougeL": {
+            "precision": 0.4444,
+            "recall": 0.2857,
+            "f1": 0.3478
+          }
+        }
+      }
+    },
+    {
+      "case_id": "CASE-003",
+      "title": "Hypertension Routine Review",
+      "reference_summary": "Patient David attended routine hypertension follow-up on Amlodipine 5 mg daily. Reported mild evening pedal edema for 2 weeks with no chest pain or dyspnea. BP was 138/86 mmHg, HR 72 bpm. Medication adherence is excellent. Advised leg elevation, ordered renal function tests, and scheduled follow-up in 4 weeks.",
+      "bart": {
+        "summary": "Doctor: Hello Mr. David, good to see you. How have you been feeling on the Amlodipine 5 mg? Patient: I feel fine overall, no chest pain or shortness of breath. Doctor: Let us check your vitals. Your blood pressure is 138/86 mmHg and heart rate is 72 bpm.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3469,
+            "recall": 0.3269,
+            "f1": 0.3366
+          },
+          "rouge2": {
+            "precision": 0.1667,
+            "recall": 0.1569,
+            "f1": 0.1616
+          },
+          "rougeL": {
+            "precision": 0.2857,
+            "recall": 0.2692,
+            "f1": 0.2772
+          }
+        }
+      },
+      "t5": {
+        "summary": "i feel fine overall, no chest pain or shortness of breath . but i noticed slight ankle swelling in the evenings for the last 2 weeks .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.36,
+            "recall": 0.1731,
+            "f1": 0.2338
+          },
+          "rouge2": {
+            "precision": 0.1667,
+            "recall": 0.0784,
+            "f1": 0.1067
+          },
+          "rougeL": {
+            "precision": 0.24,
+            "recall": 0.1154,
+            "f1": 0.1558
+          }
+        }
+      }
+    },
+    {
+      "case_id": "CASE-004",
+      "title": "Acute Gastroenteritis Consultation",
+      "reference_summary": "Patient Linda presented with acute gastroenteritis and mild dehydration following recent seafood consumption. Symptoms include frequent watery diarrhea, vomiting, and abdominal cramping for 24 hours. Physical examination revealed mild diffuse abdominal tenderness. Vitals showed mild tachycardia (HR 94) and borderline hypotension. Prescribed oral rehydration salts, Ondansetron 4 mg, and dietary guidance.",
+      "bart": {
+        "summary": "Doctor: Good afternoon Mrs. Linda. What brings you to the clinic? Patient: Doctor, I have had terrible watery diarrhea and vomiting since yesterday evening, probably 6 episodes of diarrhea. Doctor: Any fever, blood in stool, or recent travel or takeout food? Doctor: No, most gastroenteritis is self-limiting. Stick to a bland diet.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.1509,
+            "recall": 0.1569,
+            "f1": 0.1538
+          },
+          "rouge2": {
+            "precision": 0.0192,
+            "recall": 0.02,
+            "f1": 0.0196
+          },
+          "rougeL": {
+            "precision": 0.0755,
+            "recall": 0.0784,
+            "f1": 0.0769
+          }
+        }
+      },
+      "t5": {
+        "summary": "i feel very thirsty and dizzy when standing up . you have acute gastroenteritis with mild dehydration . most gastroenteritis is self-limiting .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2857,
+            "recall": 0.1176,
+            "f1": 0.1667
+          },
+          "rouge2": {
+            "precision": 0.1,
+            "recall": 0.04,
+            "f1": 0.0571
+          },
+          "rougeL": {
+            "precision": 0.1905,
+            "recall": 0.0784,
+            "f1": 0.1111
+          }
+        }
+      }
+    },
+    {
+      "case_id": "CASE-005",
+      "title": "Type 2 Diabetes Routine Review",
+      "reference_summary": "Patient Michael attended diabetic management review with suboptimal glycemic control (HbA1c 8.6%, fasting glucose 182 mg/dL) presenting with polyuria and polydipsia. Examination showed mild peripheral sensory neuropathy in distal toes. Intensified medication from Metformin 500 mg to Metformin 1000 mg twice daily plus Empagliflozin 10 mg daily with renal panel in 2 weeks and follow-up in 3 months.",
+      "bart": {
+        "summary": "Doctor: Good morning Mr. Michael. Let us review your glycemic control. Have you had any blurred vision, numbness, or tingling in your feet? Patient: Slight numbness in my toes, but no vision problems. Blood pressure is 132/82 mmHg. We need to escalate therapy.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2045,
+            "recall": 0.1475,
+            "f1": 0.1714
+          },
+          "rouge2": {
+            "precision": 0.0233,
+            "recall": 0.0167,
+            "f1": 0.0194
+          },
+          "rougeL": {
+            "precision": 0.1591,
+            "recall": 0.1148,
+            "f1": 0.1333
+          }
+        }
+      },
+      "t5": {
+        "summary": "blood glucose is 182 mg/dL and your HbA1c is 8. 6% . have you had blurred vision, numbness, or tingling in your feet?",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3913,
+            "recall": 0.1475,
+            "f1": 0.2143
+          },
+          "rouge2": {
+            "precision": 0.1364,
+            "recall": 0.05,
+            "f1": 0.0732
+          },
+          "rougeL": {
+            "precision": 0.2609,
+            "recall": 0.0984,
+            "f1": 0.1429
+          }
+        }
+      }
+    },
+    {
+      "case_id": "CASE-006",
+      "title": "Acute Otitis Media (Pediatric)",
+      "reference_summary": "Four-year-old Tommy presented with right ear pain, nocturnal crying, irritability, and fever of 101.5 F. Otoscopic examination revealed right acute otitis media with erythematous, bulging tympanic membrane. Diagnosed with acute suppurative otitis media. Prescribed oral Amoxicillin suspension for 7 days and pediatric Paracetamol with review in 72 hours if unimproved.",
+      "bart": {
+        "summary": "Tommy has acute otitis media of the right ear. Amoxicillin suspension 40 mg/kg/day divided twice daily for 7 days. Paracetamol syrup 160 mg every 6 hours as needed for fever and pain.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5,
+            "recall": 0.3208,
+            "f1": 0.3908
+          },
+          "rouge2": {
+            "precision": 0.1818,
+            "recall": 0.1154,
+            "f1": 0.1412
+          },
+          "rougeL": {
+            "precision": 0.3235,
+            "recall": 0.2075,
+            "f1": 0.2529
+          }
+        }
+      },
+      "t5": {
+        "summary": "4 year old has a fever of 101. 5 F and refuses to eat . he has acute otitis media of the right ear. his chest and lungs are clear .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.4828,
+            "recall": 0.2642,
+            "f1": 0.3415
+          },
+          "rouge2": {
+            "precision": 0.2857,
+            "recall": 0.1538,
+            "f1": 0.2
+          },
+          "rougeL": {
+            "precision": 0.3793,
+            "recall": 0.2075,
+            "f1": 0.2683
+          }
+        }
+      }
+    },
+    {
+      "case_id": "CASE-007",
+      "title": "Mechanical Lower Back Pain",
+      "reference_summary": "Patient James presented with a 4-day history of acute lower back pain following heavy lifting. Red flag screening was negative for cauda equina and radiculopathy. Physical exam demonstrated lumbar paraspinal spasm with negative straight leg raise test and intact neurological exam. Diagnosed with acute mechanical lumbar strain. Prescribed Naproxen 500 mg, muscle relaxant, active mobilization, and follow-up in 2 weeks.",
+      "bart": {
+        "summary": "Doctor: Hello Mr. James. What can I do for you today? Patient: Hi Doctor. I injured my lower back 4 days ago while lifting heavy furniture at home. The pain is aching and stiff, rated 7 out of 10 across my lumbar spine. Doctor: Does the pain shoot down into your legs, or do you have any numbness in your groin or loss of bowel or bladder control?",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2206,
+            "recall": 0.2419,
+            "f1": 0.2308
+          },
+          "rouge2": {
+            "precision": 0.0299,
+            "recall": 0.0328,
+            "f1": 0.0312
+          },
+          "rougeL": {
+            "precision": 0.1176,
+            "recall": 0.129,
+            "f1": 0.1231
+          }
+        }
+      },
+      "t5": {
+        "summary": "i injured my lower back 4 days ago while lifting heavy furniture at home . the pain is rated 7 out of 10 across my lumbar spine . no shooting pain into the legs, no bladder or bowel issues at all .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2564,
+            "recall": 0.1613,
+            "f1": 0.198
+          },
+          "rouge2": {
+            "precision": 0.0526,
+            "recall": 0.0328,
+            "f1": 0.0404
+          },
+          "rougeL": {
+            "precision": 0.1282,
+            "recall": 0.0806,
+            "f1": 0.099
+          }
+        }
+      }
+    },
+    {
+      "case_id": "CASE-008",
+      "title": "Generalized Anxiety Disorder Review",
+      "reference_summary": "Patient Rachel presented with a 6-month history of pervasive anxiety, insomnia, palpitations, muscle tension, and restlessness (GAD-7 score 16). Organic causes excluded with normal thyroid labs. Denied suicidal ideation. Diagnosed with Generalized Anxiety Disorder. Initiated on Escitalopram 10 mg daily, CBT referral, and sleep hygiene counseling with scheduled 3-week clinical review.",
+      "bart": {
+        "summary": "Rachel says she has been feeling overwhelmed by constant worry and restlessness for the past 6 months. Escitalopram 10 mg once daily in the morning, alongside cognitive behavioral therapy (CBT) with our clinical psychologist. For severe sleep disruption, take Melatonin 3 mg at bedtime.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.3182,
+            "recall": 0.2593,
+            "f1": 0.2857
+          },
+          "rouge2": {
+            "precision": 0.093,
+            "recall": 0.0755,
+            "f1": 0.0833
+          },
+          "rougeL": {
+            "precision": 0.2273,
+            "recall": 0.1852,
+            "f1": 0.2041
+          }
+        }
+      },
+      "t5": {
+        "summary": "\"i cannot sleep more than 3 hours a night, my heart races, and my chest feels tight\" \"i get trembling and tension headaches whenever I try to relax at home,\" patient says . Escitalopram takes 2 to 4 weeks to show full therapeutic benefit, doctor says .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2,
+            "recall": 0.1667,
+            "f1": 0.1818
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "rougeL": {
+            "precision": 0.0889,
+            "recall": 0.0741,
+            "f1": 0.0808
+          }
+        }
+      }
+    },
+    {
+      "case_id": "CASE-009",
+      "title": "Acute Uncomplicated Cystitis (UTI)",
+      "reference_summary": "Patient Emily presented with a 2-day history of dysuria, urinary frequency, and suprapubic discomfort. Urinalysis was positive for nitrites and leukocyte esterase, consistent with acute uncomplicated cystitis. Systemic and pyelonephritis signs were absent. Managed with oral Nitrofurantoin 100 mg twice daily for 5 days, urinary analgesic, and hydration instructions.",
+      "bart": {
+        "summary": "Doctor: Hello Ms. Emily, what symptoms are bothering you today? Patient: Doctor, I have had a severe burning sensation when urinating for 2 days. Doctor: Yes, this is acute uncomplicated urinary tract infection (cystitis)",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2941,
+            "recall": 0.2,
+            "f1": 0.2381
+          },
+          "rouge2": {
+            "precision": 0.0606,
+            "recall": 0.0408,
+            "f1": 0.0488
+          },
+          "rougeL": {
+            "precision": 0.2059,
+            "recall": 0.14,
+            "f1": 0.1667
+          }
+        }
+      },
+      "t5": {
+        "summary": "patient has severe burning sensation when urinating for 2 days . urinalysis shows positive leukocytes, positive nitrites, and trace hematuria . patient is prescribing Nitrofurantoin 100 mg twice daily for 5 days .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.5667,
+            "recall": 0.34,
+            "f1": 0.425
+          },
+          "rouge2": {
+            "precision": 0.3103,
+            "recall": 0.1837,
+            "f1": 0.2308
+          },
+          "rougeL": {
+            "precision": 0.5,
+            "recall": 0.3,
+            "f1": 0.375
+          }
+        }
+      }
+    },
+    {
+      "case_id": "CASE-010",
+      "title": "Asthma Mild Exacerbation",
+      "reference_summary": "Patient Daniel presented with mild-to-moderate asthma exacerbation secondary to viral upper respiratory tract infection. Reported nocturnal cough, dyspnea, and frequent Albuterol rescue use. Exam showed bilateral expiratory wheezing with peak flow at 70% of baseline and SaO2 96%. Stepped up to Fluticasone/Salmeterol maintenance plus 5-day oral Prednisone 40 mg burst and 5-day follow-up.",
+      "bart": {
+        "summary": "My asthma has flared up over the last 3 days after catching a cold. I wake up coughing at night and feel shortness of breath and chest tightness when climbing stairs. Doctor: How often have you been using your blue albuterol rescue inhaler? Patient: Around 4 to 5 times a day, but the relief only lasts about an hour.",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.2712,
+            "recall": 0.2712,
+            "f1": 0.2712
+          },
+          "rouge2": {
+            "precision": 0.0172,
+            "recall": 0.0172,
+            "f1": 0.0172
+          },
+          "rougeL": {
+            "precision": 0.1356,
+            "recall": 0.1356,
+            "f1": 0.1356
+          }
+        }
+      },
+      "t5": {
+        "summary": "asthma sufferer wakes up coughing at night and feels shortness of breath and chest tightness when climbing stairs . patient uses blue albuterol rescue inhaler around 4 to 5 times a day, but the relief only lasts about an hour .",
+        "metrics": {
+          "rouge1": {
+            "precision": 0.359,
+            "recall": 0.2373,
+            "f1": 0.2857
+          },
+          "rouge2": {
+            "precision": 0.0263,
+            "recall": 0.0172,
+            "f1": 0.0208
+          },
+          "rougeL": {
+            "precision": 0.2051,
+            "recall": 0.1356,
+            "f1": 0.1633
+          }
+        }
+      }
+    }
+  ]
+}

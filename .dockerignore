@@ -1,0 +1,11 @@
+__pycache__
+*.pyc
+*.pyo
+.git
+.gitignore
+*.md
+data/uploads/*
+data/clinical_reports.db
+.env
+venv/
+.venv/

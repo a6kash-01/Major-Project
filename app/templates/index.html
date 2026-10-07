@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Clinical Report Generator | Speech-to-Text & Transformer Summarization</title>
+  <meta name="description" content="AI Powered Clinical Report Generation System using OpenAI Whisper ASR, BART & T5 Deep Learning Summarization, and ROUGE Model Evaluation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header Banner -->
+    <header class="header">
+      <div class="header-content">
+        <div class="brand">
+          <div class="brand-icon">
+            <i class="fa-solid fa-stethoscope"></i>
+          </div>
+          <div>
+            <h1>Clinical Report AI</h1>
+            <p class="subtitle">Speech Recognition (Whisper ASR) & Transformer Summarization (BART / T5)</p>
+          </div>
+        </div>
+        <div class="header-badges">
+          <span class="badge badge-accent"><i class="fa-solid fa-microchip"></i> Whisper ASR</span>
+          <span class="badge badge-purple"><i class="fa-solid fa-brain"></i> BART & T5</span>
+          <span class="badge badge-success"><i class="fa-solid fa-shield-halved"></i> Fact-Preserving</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="consultation">
+        <i class="fa-solid fa-microphone-lines"></i> 1. Audio & Transcription
+      </button>
+      <button class="nav-tab" data-tab="report">
+        <i class="fa-solid fa-file-medical"></i> 2. Clinical Report & Summary
+      </button>
+      <button class="nav-tab" data-tab="database">
+        <i class="fa-solid fa-database"></i> 3. Database History
+      </button>
+      <button class="nav-tab" data-tab="evaluation">
+        <i class="fa-solid fa-chart-simple"></i> 4. ROUGE Model Evaluation
+      </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- TAB 1: AUDIO & TRANSCRIPTION -->
+      <section id="tab-consultation" class="tab-pane active">
+        <div class="grid grid-2">
+          <!-- Input Card -->
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-file-audio"></i> Consultation Audio Input</h2>
+            </div>
+            <div class="card-body">
+              <!-- Upload Box -->
+              <div class="upload-area" id="drop-zone">
+                <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                <h3>Drag & Drop Doctor-Patient Audio</h3>
+                <p>Supports MP3, WAV, M4A, FLAC, OGG</p>
+                <input type="file" id="audio-input" accept="audio/*" class="file-input">
+                <label for="audio-input" class="btn btn-primary mt-2">
+                  <i class="fa-solid fa-folder-open"></i> Browse File
+                </label>
+              </div>
+
+              <!-- Quick Test Sample Audio & Microphone Recording -->
+              <div class="sample-actions mt-3" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                <button class="btn btn-outline" id="load-sample-btn">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Load Pre-Recorded Sample Audio
+                </button>
+                <button class="btn btn-primary" id="record-mic-btn">
+                  <i class="fa-solid fa-microphone"></i> Record from Mic
+                </button>
+                <button class="btn btn-outline hidden" id="stop-record-btn" style="background: var(--danger); color: white; border-color: var(--danger);">
+                  <i class="fa-solid fa-stop"></i> Stop Recording
+                </button>
+                <span id="recording-timer" class="badge badge-accent hidden">
+                  <i class="fa-solid fa-circle" style="color: #ef4444; animation: pulse 1s infinite;"></i> <span id="rec-time">00:00</span>
+                </span>
+              </div>
+
+              <!-- Selected Audio Player -->
+              <div id="audio-player-container" class="audio-player-box hidden mt-3">
+                <div class="audio-info">
+                  <i class="fa-solid fa-music"></i>
+                  <span id="audio-filename">sample_doctor_patient.wav</span>
+                </div>
+                <audio id="audio-player" controls class="w-full mt-2"></audio>
+                <button id="transcribe-btn" class="btn btn-success btn-block mt-3">
+                  <i class="fa-solid fa-bolt"></i> Run Whisper Speech Recognition
+                </button>
+              </div>
+
+              <!-- Loading Spinner -->
+              <div id="asr-spinner" class="spinner-overlay hidden">
+                <div class="spinner"></div>
+                <p class="mt-2 font-semibold">Whisper ASR Model Transcribing Audio...</p>
+                <small class="text-muted">Converting speech to text and identifying speakers</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transcript Viewer Card -->
+          <div class="card">
+            <div class="card-header flex-between">
+              <h2><i class="fa-solid fa-quote-left"></i> ASR Transcript & Dialogue</h2>
+              <span id="speaker-badge" class="badge badge-info hidden">Speaker Tagged</span>
+            </div>
+            <div class="card-body">
+              <div class="transcript-toolbar">
+                <button id="raw-transcript-btn" class="tab-btn active">Raw Text</button>
+                <button id="clean-transcript-btn" class="tab-btn">Cleaned & Formatted Dialogue</button>
+              </div>
+
+              <div id="transcript-display" class="transcript-container">
+                <div class="empty-state">
+                  <i class="fa-solid fa-comment-medical"></i>
+                  <p>Upload or load an audio file and click "Run Whisper Speech Recognition" to view the transcript here.</p>
+                </div>
+              </div>
+
+              <!-- Patient & Doctor Details Input -->
+              <div class="consultation-meta-form mt-4">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="patient-id-input"><i class="fa-solid fa-id-card"></i> Patient ID</label>
+                    <input type="text" id="patient-id-input" value="PAT-2026-88" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="doctor-info-input"><i class="fa-solid fa-user-doctor"></i> Doctor Info</label>
+                    <input type="text" id="doctor-info-input" value="Dr. Alexander Fleming, MD" class="form-control">
+                  </div>
+                </div>
+                <button id="proceed-to-summarize-btn" class="btn btn-accent btn-block mt-2">
+                  <i class="fa-solid fa-arrow-right"></i> Proceed to BART / T5 Summarization
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: CLINICAL REPORT & SUMMARIZATION -->
+      <section id="tab-report" class="tab-pane">
+        <div class="grid grid-3-1">
+          <!-- Main Clinical Report Card -->
+          <div class="card">
+            <div class="card-header flex-between">
+              <h2><i class="fa-solid fa-notes-medical"></i> SOAP Clinical Report</h2>
+              <div class="report-actions">
+                <button id="save-db-btn" class="btn btn-success btn-sm"><i class="fa-solid fa-floppy-disk"></i> Save to DB</button>
+                <button id="download-report-btn" class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> Download .txt</button>
+                <button id="print-report-btn" class="btn btn-outline btn-sm"><i class="fa-solid fa-print"></i> Print / PDF</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Report Render Box -->
+              <div id="report-view-container">
+                <div class="empty-state">
+                  <i class="fa-solid fa-clipboard-list"></i>
+                  <p>Select a summarization model (BART or T5) and click "Generate Clinical Report".</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Model Selector & Summary Control Side Panel -->
+          <div class="card side-panel">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-sliders"></i> Model Selection</h2>
+            </div>
+            <div class="card-body">
+              <p class="text-sm text-muted mb-3">Choose the pretrained Transformer model for abstractive clinical summarization:</p>
+              
+              <!-- Model Selector Radio Cards -->
+              <div class="model-selection-group">
+                <label class="model-card active" id="label-bart">
+                  <input type="radio" name="model-choice" value="BART" checked>
+                  <div class="model-info">
+                    <span class="model-title"><i class="fa-solid fa-bolt-lightning"></i> BART Transformer</span>
+                    <span class="model-desc">facebook/bart-large-cnn</span>
+                    <small>High compression & abstractive flow</small>
+                  </div>
+                </label>
+
+                <label class="model-card" id="label-t5">
+                  <input type="radio" name="model-choice" value="T5">
+                  <div class="model-info">
+                    <span class="model-title"><i class="fa-solid fa-brain"></i> T5 Transformer</span>
+                    <span class="model-desc">t5-base / t5-small</span>
+                    <small>Text-to-text sequence framework</small>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Generate Button -->
+              <button id="generate-summary-btn" class="btn btn-primary btn-block mt-4">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Clinical Summary
+              </button>
+
+              <!-- Spinner -->
+              <div id="summary-spinner" class="spinner-overlay hidden">
+                <div class="spinner"></div>
+                <p class="mt-2 font-semibold" id="summary-spinner-text">Generating Summary with BART...</p>
+                <small class="text-muted">Hierarchical chunk summarization for long text</small>
+              </div>
+
+              <!-- Summary Metadata Box -->
+              <div id="summary-meta-box" class="summary-meta-card hidden mt-4">
+                <h4><i class="fa-solid fa-circle-info"></i> Pipeline Metrics</h4>
+                <div class="meta-item">
+                  <span>Selected Model:</span> <strong id="meta-model-name">BART</strong>
+                </div>
+                <div class="meta-item">
+                  <span>Chunking Method:</span> <span id="meta-chunk-method">Hierarchical</span>
+                </div>
+                <div class="meta-item">
+                  <span>Consultation ID:</span> <span id="meta-cons-id">CONS-8821</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: DATABASE HISTORY -->
+      <section id="tab-database" class="tab-pane">
+        <div class="card">
+          <div class="card-header flex-between">
+            <h2><i class="fa-solid fa-database"></i> Stored Consultation Reports</h2>
+            <button id="refresh-db-btn" class="btn btn-outline btn-sm"><i class="fa-solid fa-rotate"></i> Refresh Database</button>
+          </div>
+          <div class="card-body">
+            <div class="search-bar mb-3">
+              <i class="fa-solid fa-magnifying-glass search-icon"></i>
+              <input type="text" id="db-search-input" placeholder="Search by Consultation ID, Patient ID, or Doctor Name..." class="form-control">
+            </div>
+
+            <div class="table-responsive">
+              <table class="table" id="db-reports-table">
+                <thead>
+                  <tr>
+                    <th>Consultation ID</th>
+                    <th>Patient ID</th>
+                    <th>Date & Time</th>
+                    <th>Doctor Information</th>
+                    <th>Model</th>
+                    <th>Chief Complaint</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="db-table-body">
+                  <tr>
+                    <td colspan="7" class="text-center py-4 text-muted">Loading stored reports...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: ROUGE MODEL EVALUATION -->
+      <section id="tab-evaluation" class="tab-pane">
+        <div class="card mb-4">
+          <div class="card-header flex-between">
+            <h2><i class="fa-solid fa-chart-line"></i> BART vs T5 ROUGE Model Evaluation</h2>
+            <button id="run-eval-btn" class="btn btn-purple"><i class="fa-solid fa-play"></i> Run ROUGE Evaluation Benchmark</button>
+          </div>
+          <div class="card-body">
+            <p class="text-muted mb-4">
+              The evaluation engine benchmarks <strong>BART</strong> and <strong>T5</strong> Transformer models using identical clinical test cases and expert ground-truth reference summaries. Evaluates <strong>ROUGE-1</strong> (Unigram overlap), <strong>ROUGE-2</strong> (Bigram overlap), and <strong>ROUGE-L</strong> (Longest Common Subsequence).
+            </p>
+
+            <!-- Winner Banner -->
+            <div id="eval-winner-banner" class="winner-banner hidden mb-4">
+              <i class="fa-solid fa-trophy winner-trophy"></i>
+              <div>
+                <h3>Superior Model: <span id="winner-model-name">BART</span></h3>
+                <p>Outperformed on overall ROUGE-L F1-Score on clinical test cases.</p>
+              </div>
+            </div>
+
+            <!-- ROUGE Metrics Cards Grid -->
+            <div class="grid grid-2 mb-4">
+              <!-- BART Card -->
+              <div class="metric-card card-bart">
+                <div class="metric-card-header">
+                  <h3><i class="fa-solid fa-bolt"></i> BART (facebook/bart-large-cnn)</h3>
+                </div>
+                <div class="metric-table-box">
+                  <table class="metric-table">
+                    <thead>
+                      <tr>
+                        <th>Metric</th>
+                        <th>Precision</th>
+                        <th>Recall</th>
+                        <th>F1 Score</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>ROUGE-1</strong></td>
+                        <td id="bart-r1-p">0.0000</td>
+                        <td id="bart-r1-r">0.0000</td>
+                        <td><strong id="bart-r1-f1">0.0000</strong></td>
+                      </tr>
+                      <tr>
+                        <td><strong>ROUGE-2</strong></td>
+                        <td id="bart-r2-p">0.0000</td>
+                        <td id="bart-r2-r">0.0000</td>
+                        <td><strong id="bart-r2-f1">0.0000</strong></td>
+                      </tr>
+                      <tr>
+                        <td><strong>ROUGE-L</strong></td>
+                        <td id="bart-rL-p">0.0000</td>
+                        <td id="bart-rL-r">0.0000</td>
+                        <td><strong id="bart-rL-f1">0.0000</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- T5 Card -->
+              <div class="metric-card card-t5">
+                <div class="metric-card-header">
+                  <h3><i class="fa-solid fa-brain"></i> T5 (t5-base / t5-small)</h3>
+                </div>
+                <div class="metric-table-box">
+                  <table class="metric-table">
+                    <thead>
+                      <tr>
+                        <th>Metric</th>
+                        <th>Precision</th>
+                        <th>Recall</th>
+                        <th>F1 Score</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>ROUGE-1</strong></td>
+                        <td id="t5-r1-p">0.0000</td>
+                        <td id="t5-r1-r">0.0000</td>
+                        <td><strong id="t5-r1-f1">0.0000</strong></td>
+                      </tr>
+                      <tr>
+                        <td><strong>ROUGE-2</strong></td>
+                        <td id="t5-r2-p">0.0000</td>
+                        <td id="t5-r2-r">0.0000</td>
+                        <td><strong id="t5-r2-f1">0.0000</strong></td>
+                      </tr>
+                      <tr>
+                        <td><strong>ROUGE-L</strong></td>
+                        <td id="t5-rL-p">0.0000</td>
+                        <td id="t5-rL-r">0.0000</td>
+                        <td><strong id="t5-rL-f1">0.0000</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detailed Case Comparisons -->
+            <div id="eval-cases-container" class="mt-4">
+              <h3><i class="fa-solid fa-list-check"></i> Benchmark Test Case Analysis</h3>
+              <div id="eval-cases-list" class="cases-accordion mt-3">
+                <p class="text-muted">Click "Run ROUGE Evaluation Benchmark" above to compute case-by-case model scores.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <p>AI Powered Clinical Report Generation System &copy; 2026 | Built with PyTorch, Hugging Face Transformers, Whisper, FastAPI</p>
+    </footer>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
